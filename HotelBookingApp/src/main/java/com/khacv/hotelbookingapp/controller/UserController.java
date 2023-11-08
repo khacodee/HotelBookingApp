@@ -1,11 +1,8 @@
 package com.khacv.hotelbookingapp.controller;
 
 import com.khacv.hotelbookingapp.dto.UserDTO;
-import com.khacv.hotelbookingapp.dto.UserInformationDTO;
-import com.khacv.hotelbookingapp.dto.UserProfileDTO;
 import com.khacv.hotelbookingapp.user.AuthRequest;
 import com.khacv.hotelbookingapp.user.UserInfo;
-import com.khacv.hotelbookingapp.exception.ForbiddenException;
 import com.khacv.hotelbookingapp.exception.UnauthorizedException;
 import com.khacv.hotelbookingapp.repository.UserInfoRepository;
 import com.khacv.hotelbookingapp.service.JwtService;
@@ -17,7 +14,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -67,11 +63,6 @@ public class UserController {
         return ResponseEntity.ok(service.updateUser(id, userInfo));
     }
 
-    @PutMapping("/users/profile/{id}")
-    @PreAuthorize("hasAuthority('UPDATE_USER')")
-    public ResponseEntity<?> updateProfileUser(@PathVariable int id, @RequestBody UserProfileDTO userDTO){
-        return ResponseEntity.ok(service.updateProfileUser(id, userDTO));
-    }
 
 
     @DeleteMapping("/users/{id}")

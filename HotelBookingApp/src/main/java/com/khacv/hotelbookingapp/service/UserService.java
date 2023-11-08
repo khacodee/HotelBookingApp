@@ -2,7 +2,6 @@ package com.khacv.hotelbookingapp.service;
 
 import com.khacv.hotelbookingapp.dto.UserDTO;
 import com.khacv.hotelbookingapp.dto.UserInformationDTO;
-import com.khacv.hotelbookingapp.dto.UserProfileDTO;
 import com.khacv.hotelbookingapp.user.Role;
 import com.khacv.hotelbookingapp.user.UserInfo;
 import com.khacv.hotelbookingapp.exception.UserNotFoundException;
@@ -64,27 +63,6 @@ public class UserService {
         return "User Added Successfully";
     }
 
-
-    public String updateProfileUser(int id, UserProfileDTO userProfileDTO){
-        UserInfo userInfo = userRepository.findById(id);
-        if(userInfo == null){
-            throw new UserNotFoundException("User with ID " + id + " not found.");
-        }
-        if(userProfileDTO.getEmail() != null){
-                userInfo.setEmail(userProfileDTO.getEmail());
-        }
-        if(userProfileDTO.getFullName() != null){
-            userInfo.setFullName(userProfileDTO.getFullName());
-        }
-        if(userProfileDTO.getAddress() != null){
-            userInfo.setAddress(userProfileDTO.getAddress());
-        }
-        if(userProfileDTO.getPhoneNumber() != null){
-            userInfo.setPhoneNumber(userProfileDTO.getPhoneNumber());
-        }
-        userRepository.save(userInfo);
-        return "Update profile successfully";
-    }
     public String updateUser(int id, UserInfo userInfo){
         UserInfo userInf =userRepository.findById(id);
         if(userInf == null){
