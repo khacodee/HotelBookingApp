@@ -1,13 +1,18 @@
 package com.khacv.hotelbookingapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,7 +23,7 @@ import java.util.Set;
 public class Hotel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "hotel_id")
+    @Column(name = "id")
     private int id;
     private String name;
     private String location;
@@ -26,6 +31,12 @@ public class Hotel implements Serializable {
     @Column(name = "image_url")
     private String image;
     private BigDecimal price;
+
+
+
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Room> rooms;
 
 
     @ManyToMany(fetch =  FetchType.LAZY)
@@ -37,6 +48,9 @@ public class Hotel implements Serializable {
     private  Set<Amenities> amenities = new HashSet<>();
 
 
+    @OneToMany(mappedBy = "hotel",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Reviews> reviews;
 
 
 

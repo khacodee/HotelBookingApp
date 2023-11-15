@@ -23,4 +23,6 @@ public class BookingController {
     public ResponseEntity<?> getBookById(@PathVariable int id){
         return ResponseEntity.ok(bookingService.getBookingById(id));
     }
+
+
 }

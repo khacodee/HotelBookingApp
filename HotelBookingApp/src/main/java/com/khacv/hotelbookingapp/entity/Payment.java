@@ -1,5 +1,6 @@
 package com.khacv.hotelbookingapp.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,8 +25,9 @@ public class Payment {
     @Column(name="card_number")
     private String cardNumber;
 
-    @ManyToOne()
-    @JoinColumn(name = "booking_id")
+    @ManyToOne
+    @JoinColumn(name = "booking_id", nullable = false)
+    @JsonBackReference
     private Booking booking;
 
 }

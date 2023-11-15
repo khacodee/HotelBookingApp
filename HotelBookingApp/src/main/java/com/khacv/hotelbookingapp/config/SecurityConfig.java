@@ -43,6 +43,7 @@ public class SecurityConfig {
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
                                 //.requestMatchers(HttpMethod.POST, "/auth/welcome", "/auth/addNewUser", "/auth/generateToken").permitAll()
+                                .requestMatchers("/app/**").permitAll()
                                 .requestMatchers("/auth/user/**", "/auth/admin/**").authenticated()
                 )
                 .sessionManagement(sessionManagement ->

@@ -1,5 +1,6 @@
 package com.khacv.hotelbookingapp.controller;
 
+import com.khacv.hotelbookingapp.dto.HotelWithRooms;
 import com.khacv.hotelbookingapp.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,10 @@ public class HotelController {
         return ResponseEntity.ok(hotelService.getListHotel());
     }
 
+
+
     @GetMapping("/hotels/{id}")
-    public ResponseEntity<?> getUserById(@PathVariable int id){
+    public ResponseEntity<?> getHotelWithRooms(@PathVariable int id) {
         return ResponseEntity.ok(hotelService.getHotelById(id));
     }
 }

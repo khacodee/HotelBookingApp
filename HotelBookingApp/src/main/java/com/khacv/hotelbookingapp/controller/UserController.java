@@ -36,6 +36,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
+
     //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @PreAuthorize("hasAuthority('VIEW_DETAIL_USER')")
     public ResponseEntity<?> getUserById(@PathVariable int id){
