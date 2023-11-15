@@ -1,12 +1,11 @@
 package com.khacv.hotelbookingapp.controller;
 
+import com.khacv.hotelbookingapp.dto.GuestDTO;
+import com.khacv.hotelbookingapp.entity.Guest;
 import com.khacv.hotelbookingapp.service.GuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/app")
@@ -22,5 +21,10 @@ public class GuestController {
     @GetMapping("/guest/{id}")
     public ResponseEntity<?> getGuestById(@PathVariable int id){
         return ResponseEntity.ok(guestService.getGuestById(id));
+    }
+
+    @PutMapping("/guest/{id}")
+    public ResponseEntity<?> updateProfileGuest(@PathVariable int id, @RequestBody GuestDTO guest){
+        return ResponseEntity.ok(guestService.updateGuestProfile(id, guest));
     }
 }
