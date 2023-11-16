@@ -1,7 +1,7 @@
 package com.khacv.hotelbookingapp.filter;
 
-import com.khacv.hotelbookingapp.service.JwtService;
-import com.khacv.hotelbookingapp.service.UserInfoService;
+import com.khacv.hotelbookingapp.service.user.JwtService;
+import com.khacv.hotelbookingapp.service.user.UserInfoService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
