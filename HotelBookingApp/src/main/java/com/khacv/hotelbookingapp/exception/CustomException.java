@@ -26,4 +26,10 @@ public class CustomException {
     public ResponseEntity<ErrorResponese> HandlerUnauthorizedException(UnauthorizedException ex, WebRequest req){
         return ResponseEntity.ok(new ErrorResponese(HttpStatus.UNAUTHORIZED, ex.getMessage()));
     }
+
+    @ExceptionHandler(value = {NotFoundException.class})
+    //@ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ErrorResponese> HandlerNotFoundException(NotFoundException ex, WebRequest req){
+        return ResponseEntity.ok(new ErrorResponese(HttpStatus.NOT_FOUND, ex.getMessage()));
+    }
 }
