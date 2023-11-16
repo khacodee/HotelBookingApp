@@ -32,4 +32,10 @@ public class CustomException {
     public ResponseEntity<ErrorResponese> HandlerNotFoundException(NotFoundException ex, WebRequest req){
         return ResponseEntity.ok(new ErrorResponese(HttpStatus.NOT_FOUND, ex.getMessage()));
     }
+
+    @ExceptionHandler(value = {IllegalArgumentException.class})
+    //@ResponseStatus(HttpStatus.NOT_FO)
+    public ResponseEntity<ErrorResponese> HandlerNotFoundException(IllegalArgumentException ex, WebRequest req){
+        return ResponseEntity.ok(new ErrorResponese(HttpStatus.BAD_REQUEST, ex.getMessage()));
+    }
 }
