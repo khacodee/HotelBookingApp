@@ -1,4 +1,4 @@
-#### HotelBookingApp
+# HotelBookingApp
 
 
 ## Mục đích
