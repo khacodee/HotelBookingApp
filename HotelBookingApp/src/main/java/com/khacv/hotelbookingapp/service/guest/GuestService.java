@@ -1,0 +1,43 @@
+package com.khacv.hotelbookingapp.service.guest;
+
+import com.khacv.hotelbookingapp.dto.guest.GuestDTO;
+import com.khacv.hotelbookingapp.entity.guest.Guest;
+import com.khacv.hotelbookingapp.repository.guest.GuestRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+import static com.khacv.hotelbookingapp.util.Messages.*;
+
+@Service
+public class GuestService implements IGuestService {
+    @Autowired
+    private GuestRepository guestRepository;
+
+    @Override
+    public List<Guest> getAllGuest(){
+        return guestRepository.findAll();
+    }
+
+    @Override
+    public Guest getGuestById(int id){
+        return guestRepository.findById(id);
+    }
+
+    @Override
+    public String updateGuestProfile(int guestId, GuestDTO guestDTO){
+        Guest existingGuest = guestRepository.findById(guestId);
+        if(existingGuest != null){
+            existingGuest.setFullName(guestDTO.getFullName());
+            existingGuest.setAddress(guestDTO.getAddress());
+            existingGuest.setPhoneNumber(guestDTO.getPhoneNumber());
+
+             guestRepository.save(existingGuest);
+
+             return UPDATE_SUCCESSFUL;
+        }
+        return null;
+    }
+
+}
