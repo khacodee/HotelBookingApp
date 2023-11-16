@@ -91,4 +91,15 @@ public class BookingService {
 
         return "Booking status updated successfully";
     }
+
+    public List<Booking> getListBookingApprove(){
+
+        List<Booking> result = bookingRepository.findByBookingStatus("PENDING");
+
+        if(result.isEmpty()){
+            throw new NotFoundException("There are currently no applications");
+        }
+
+        return result;
+    }
 }

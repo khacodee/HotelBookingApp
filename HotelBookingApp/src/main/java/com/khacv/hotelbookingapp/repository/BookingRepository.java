@@ -13,4 +13,5 @@ import java.util.List;
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
        Booking findById(int id);
 
+       List<Booking> findByBookingStatus(String status);
 }
