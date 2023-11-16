@@ -5,6 +5,7 @@ import com.khacv.hotelbookingapp.entity.Booking;
 import com.khacv.hotelbookingapp.entity.Guest;
 import com.khacv.hotelbookingapp.entity.Payment;
 import com.khacv.hotelbookingapp.entity.Room;
+import com.khacv.hotelbookingapp.exception.IllegalArgumentException;
 import com.khacv.hotelbookingapp.exception.NotFoundException;
 import com.khacv.hotelbookingapp.repository.BookingRepository;
 import com.khacv.hotelbookingapp.repository.GuestRepository;
@@ -67,5 +68,27 @@ public class BookingService {
 
         return "Create Booking Room Successfully!!";
 
+    }
+
+    public String approveBookRoom(int id, String status){
+        Booking booking = bookingRepository.findById(id);
+
+        if(booking == null){
+            throw new NotFoundException("Booking not found!!");
+        }
+
+        switch (status){
+            case "confirmed":
+                booking.setBookingStatus("CONFIRMED");
+                break;
+            case "rejected":
+                booking.setBookingStatus("REJECTED");
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid status");
+        }
+        bookingRepository.save(booking);
+
+        return "Booking status updated successfully";
     }
 }
