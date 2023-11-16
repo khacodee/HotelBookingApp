@@ -28,4 +28,9 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.createBooking(bookingRoomDTO));
     }
 
+    @PutMapping("/booking/{id}")
+    public ResponseEntity<?> approveBookRoom(@PathVariable int id,@RequestParam("status") String status){
+        return ResponseEntity.ok(bookingService.approveBookRoom(id, status));
+    }
+
 }
