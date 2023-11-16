@@ -12,10 +12,15 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;
 
-    @GetMapping("/booking")
-    public ResponseEntity<?> getListBook(){
-        return ResponseEntity.ok(bookingService.getListBooking());
+    @GetMapping("/bookings")
+    public ResponseEntity<?> getAllBookings(@RequestParam(required = false) String status){
+        if(status != null && status.equalsIgnoreCase("PENDING")) {
+            return ResponseEntity.ok(bookingService.getListBookingApprove());
+        } else {
+            return ResponseEntity.ok(bookingService.getListBooking());
+        }
     }
+
 
     @GetMapping("/booking/{id}")
     public ResponseEntity<?> getBookById(@PathVariable int id){
@@ -32,5 +37,6 @@ public class BookingController {
     public ResponseEntity<?> approveBookRoom(@PathVariable int id,@RequestParam("status") String status){
         return ResponseEntity.ok(bookingService.approveBookRoom(id, status));
     }
+
 
 }
