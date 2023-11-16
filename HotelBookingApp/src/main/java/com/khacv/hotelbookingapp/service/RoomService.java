@@ -74,4 +74,17 @@ public class RoomService {
 
     }
 
+    public String deleteRoom(int id){
+        // Tìm phòng cần xóa bằng ID
+        Room room = roomRepository.findById(id);
+        if(room == null){
+            throw new NotFoundException("Room not found!");
+        }
+
+        // Xóa phòng từ cơ sở dữ liệu
+        roomRepository.delete(room);
+
+        return "Room deleted successfully";
+    }
+
 }
