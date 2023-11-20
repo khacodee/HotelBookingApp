@@ -14,4 +14,8 @@ public class Constants {
     public static final String CONFIRMED = "CONFIRMED";
 
     public static final String REJECTED = "REJECTED";
+
+
+    public static final String STATUS = "status";
+
 }

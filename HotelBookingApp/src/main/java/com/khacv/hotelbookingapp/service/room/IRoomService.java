@@ -16,4 +16,6 @@ public interface IRoomService {
     String updateRoom(int id, RoomDTO updateRoom);
 
     String deleteRoom(int id);
+
+    List<Room> getAvailableRooms();
 }

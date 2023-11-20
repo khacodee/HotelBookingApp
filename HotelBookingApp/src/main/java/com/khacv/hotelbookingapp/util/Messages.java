@@ -12,6 +12,10 @@ public class Messages {
 
     public static final String INVALID = "INVALID!!";
 
+    public static final String ERROR = "Error!!";
+
+    public static final String INVALID_USERNAME_PASSWORD =  "Invalid username or password";
+
 
     //BOOKING
 

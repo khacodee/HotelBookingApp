@@ -1,5 +1,6 @@
 package com.khacv.hotelbookingapp.service.user;
 
+import com.khacv.hotelbookingapp.exception.TokenExpiredException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -65,6 +66,9 @@ public class JwtService {
 
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
+        if(isTokenExpired(token)) {
+            throw new TokenExpiredException("Token has expired");
+        }
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 }

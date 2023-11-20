@@ -3,10 +3,12 @@ package com.khacv.hotelbookingapp.controller.user;
 import com.khacv.hotelbookingapp.dto.user.UserDTO;
 import com.khacv.hotelbookingapp.entity.user.AuthRequest;
 import com.khacv.hotelbookingapp.entity.user.UserInfo;
+import com.khacv.hotelbookingapp.exception.AccessDeniedException;
 import com.khacv.hotelbookingapp.exception.UnauthorizedException;
 import com.khacv.hotelbookingapp.repository.user.UserInfoRepository;
 import com.khacv.hotelbookingapp.service.user.JwtService;
 import com.khacv.hotelbookingapp.service.user.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import static com.khacv.hotelbookingapp.util.Messages.ERROR;
+import static com.khacv.hotelbookingapp.util.Messages.INVALID_USERNAME_PASSWORD;
 
 @RestController
 @RequestMapping("/auth")
@@ -36,15 +42,23 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-
     //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @PreAuthorize("hasAuthority('VIEW_DETAIL_USER')")
     public ResponseEntity<?> getUserById(@PathVariable int id){
         return ResponseEntity.ok(service.getUserById(id));
     }
+
     @GetMapping("/users")
     @PreAuthorize("hasAuthority('VIEW_LIST_USER')")
     public ResponseEntity<?> getListUser(){
+        boolean hasPermission = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("VIEW_LIST_USER"));
+
+        if (!hasPermission) {
+            throw new AccessDeniedException("You do not have permission to access this resource.");
+        }
+
+        // Code xử lý khi có quyền truy cập
         return ResponseEntity.ok(service.getListUser());
     }
     @PostMapping("/users")
@@ -61,7 +75,13 @@ public class UserController {
     @PutMapping("/users/{id}")
     @PreAuthorize("hasAuthority('UPDATE_USER')")
     public ResponseEntity<?> updateUser(@PathVariable int id, @RequestBody UserInfo userInfo){
+        try {
+
         return ResponseEntity.ok(service.updateUser(id, userInfo));
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ERROR + e.getMessage());
+        }
     }
 
 
@@ -78,12 +98,12 @@ public class UserController {
         try{
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
             if (authentication.isAuthenticated()) {
-                return ResponseEntity.ok(jwtService.generateToken(authRequest.getUsername()));
+                return ResponseEntity.ok("token: "+jwtService.generateToken(authRequest.getUsername()));
             }
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         catch (Exception ex) {
-            throw new UnauthorizedException("Invalid username or password");
+            throw new UnauthorizedException(INVALID_USERNAME_PASSWORD);
         }
     }
 

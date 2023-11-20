@@ -14,8 +14,14 @@ public class RoomController {
     private RoomService roomService;
 
     @GetMapping("/rooms")
-    public ResponseEntity<?> getListRoom(){
-        return ResponseEntity.ok(roomService.getListRoom());
+    public ResponseEntity<?> getRooms(@RequestParam(name = "available", required = false, defaultValue = "false") boolean onlyAvailable) {
+        if (onlyAvailable) {
+
+            return ResponseEntity.ok(roomService.getAvailableRooms());
+        } else {
+
+            return ResponseEntity.ok(roomService.getListRoom());
+        }
     }
 
     @GetMapping("/rooms/{id}")
