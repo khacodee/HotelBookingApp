@@ -75,23 +75,28 @@ public class BookingService implements IBookingService{
     }
 
     @Override
-    public String approveBookRoom(int id, String status){
+    public String approveBookRoom(int id){
         Booking booking = bookingRepository.findById(id);
 
         if(booking == null){
             throw new NotFoundException(NOT_FOUND);
         }
 
-        switch (status){
-            case "confirmed":
-                booking.setBookingStatus(CONFIRMED);
-                break;
-            case "rejected":
-                booking.setBookingStatus(REJECTED);
-                break;
-            default:
-                throw new IllegalArgumentException(INVALID);
+       booking.setBookingStatus(CONFIRMED);
+        bookingRepository.save(booking);
+
+        return UPDATE_SUCCESSFUL;
+    }
+
+    @Override
+    public String rejectedBookRoom(int id) {
+        Booking booking = bookingRepository.findById(id);
+
+        if(booking == null){
+            throw new NotFoundException(NOT_FOUND);
         }
+
+        booking.setBookingStatus(REJECTED);
         bookingRepository.save(booking);
 
         return UPDATE_SUCCESSFUL;

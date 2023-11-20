@@ -38,4 +38,15 @@ public class CustomException {
     public ResponseEntity<ErrorResponese> HandlerNotFoundException(IllegalArgumentException ex, WebRequest req){
         return ResponseEntity.ok(new ErrorResponese(HttpStatus.BAD_REQUEST, ex.getMessage()));
     }
+
+    @ExceptionHandler(value = {AccessDeniedException.class})
+    protected ResponseEntity<ErrorResponese> handleAccessDeniedException(AccessDeniedException ex, WebRequest req) {
+        return  ResponseEntity.ok(new ErrorResponese(HttpStatus.FORBIDDEN, ex.getMessage()));
+    }
+
+    @ExceptionHandler(value = {TokenExpiredException.class})
+    //@ResponseStatus(HttpStatus.NOT_FO)
+    public ResponseEntity<ErrorResponese> HandlerTokenExpiredException(IllegalArgumentException ex, WebRequest req){
+        return ResponseEntity.ok(new ErrorResponese(HttpStatus.UNAUTHORIZED, ex.getMessage()));
+    }
 }

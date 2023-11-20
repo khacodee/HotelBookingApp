@@ -9,6 +9,7 @@ import com.khacv.hotelbookingapp.repository.room.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.khacv.hotelbookingapp.util.Messages.*;
@@ -88,6 +89,22 @@ public class RoomService implements IRoomService{
         roomRepository.delete(room);
 
         return DELETE_SUCCESSFUL;
+    }
+
+    @Override
+    public List<Room> getAvailableRooms() {
+        List<Room> rooms = roomRepository.findAll();
+
+        List<Room> result = new ArrayList<>();
+
+        for (Room room:
+             rooms) {
+            if(!room.isBooked()){
+               result.add(room);
+            }
+        }
+
+        return result;
     }
 
 }
