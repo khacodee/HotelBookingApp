@@ -51,31 +51,40 @@ public class UserController {
     //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @PreAuthorize("hasAuthority('VIEW_DETAIL_USER')")
     public ResponseEntity<?> getUserById(@PathVariable int id){
+        try {
         return ResponseEntity.ok(service.getUserById(id));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+        }
     }
 
     @GetMapping("/users")
     @PreAuthorize("hasAuthority('VIEW_LIST_USER')")
     public ResponseEntity<?> getListUser(){
-        boolean hasPermission = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("VIEW_LIST_USER"));
-
-        if (!hasPermission) {
-            throw new AccessDeniedException("You do not have permission to access this resource.");
-        }
-
+        try {
         // Code xử lý khi có quyền truy cập
         return ResponseEntity.ok(service.getListUser());
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+        }
     }
     @PostMapping("/users")
     @PreAuthorize("hasAuthority('CREATE_USER')")
     public ResponseEntity<?> addNewUser(@RequestBody UserInfo userInfo) {
 
+        try {
         return ResponseEntity.ok(service.addUser(userInfo));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+        }
     }
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@RequestBody UserDTO userDTO) {
+        try {
         return ResponseEntity.ok(service.SignUp(userDTO));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+        }
     }
 
     @PutMapping("/users/{id}")
@@ -95,7 +104,11 @@ public class UserController {
     @DeleteMapping("/users/{id}")
     @PreAuthorize("hasAuthority('DELETE_USER')")
     public ResponseEntity<?> deleteUser(@PathVariable int id){
+        try {
         return ResponseEntity.ok(service.deleteUser(id));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+        }
     }
 
     @PostMapping("/login")
