@@ -14,7 +14,6 @@ public interface IBookingService {
 
     String updateBooking(int id, BookingRoomDTO bookingRoomDTO);
     String approveBookRoom(int id);
-
     String rejectedBookRoom(int id);
     List<Booking> getListBookingApprove();
 }
