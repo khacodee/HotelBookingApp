@@ -21,7 +21,7 @@ public class UserInfo {
     @Column(name = USER_ID)
     private int id;
     private String username;
-    private String email;
+    //private String email;
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

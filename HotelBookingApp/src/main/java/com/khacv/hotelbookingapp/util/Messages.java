@@ -20,6 +20,10 @@ public class Messages {
     public static final String TOKEN_INVALID  = "Token is missing or invalid";
 
 
+    public static final String APPROVE_BOOK= "<strong>Xin chúc mừng! Đơn đặt phòng của bạn đã được duyệt.</strong><br><br>";
     //BOOKING
 
+    public static final String MAIL_SUCCESSFULLY = "The booking has been confirmed and a notification email has been sent.";
+
+    public static final String RESERVATION_APPROVED = "Reservation has been approved";
 }

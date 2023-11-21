@@ -107,8 +107,8 @@ public class BookingService implements IBookingService{
         if(booking == null){
             throw new NotFoundException(NOT_FOUND);
         }
+        booking.setBookingStatus(CONFIRMED);
 
-       booking.setBookingStatus(CONFIRMED);
         bookingRepository.save(booking);
 
         return UPDATE_SUCCESSFUL;

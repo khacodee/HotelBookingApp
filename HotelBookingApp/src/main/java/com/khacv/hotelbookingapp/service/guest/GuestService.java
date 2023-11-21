@@ -1,7 +1,9 @@
 package com.khacv.hotelbookingapp.service.guest;
 
 import com.khacv.hotelbookingapp.dto.guest.GuestDTO;
+import com.khacv.hotelbookingapp.entity.booking.Booking;
 import com.khacv.hotelbookingapp.entity.guest.Guest;
+import com.khacv.hotelbookingapp.repository.booking.BookingRepository;
 import com.khacv.hotelbookingapp.repository.guest.GuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,9 +17,21 @@ public class GuestService implements IGuestService {
     @Autowired
     private GuestRepository guestRepository;
 
+    @Autowired
+    private BookingRepository bookingRepository;
+
     @Override
     public List<Guest> getAllGuest(){
         return guestRepository.findAll();
+    }
+
+    @Override
+    public Guest findGuestByBookingId(int id) {
+        Booking booking = bookingRepository.findById(id);
+
+        Guest guest = guestRepository.findById(booking.getGuest().getId());
+
+        return guest;
     }
 
     @Override

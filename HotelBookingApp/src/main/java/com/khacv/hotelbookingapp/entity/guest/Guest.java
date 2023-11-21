@@ -27,6 +27,7 @@ public class Guest implements Serializable {
     @Column(name = FULL_NAME)
     private String fullName;
     private String address;
+    private String email;
     @Column(name = PHONE_NUMBER)
     private String phoneNumber;
 

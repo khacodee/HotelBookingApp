@@ -63,6 +63,7 @@ public class Constants {
 
     public static final String REVIEWS = "reviews";
 
+    public static final String BR =  "<br>";
     public static final String REVIEW_ID= "review_id";
 
     public static final String REVIEW_DATE = "review_date";
@@ -97,4 +98,11 @@ public class Constants {
     public static final String USER_ID = "user_id";
 
     public static final String USER_ROLE = "user_role";
+
+    public static final String DATE_CHECK_IN = "Date check In: ";
+    public static final String DATE_CHECK_OUT = "Date check Out: ";
+
+    public static final String PHONE = "Phone Number: ";
+
+    public static final String HOTEL_NAME = "Hotel Name: ";
 }
