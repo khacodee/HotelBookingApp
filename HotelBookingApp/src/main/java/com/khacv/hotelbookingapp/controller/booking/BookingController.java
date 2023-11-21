@@ -54,6 +54,16 @@ public class BookingController {
         }
     }
 
+    @PutMapping("/booking/{id}")
+    public ResponseEntity<?> updateBookingRoom (@PathVariable int id, @RequestBody BookingRoomDTO updateBooking){
+        try {
+            return ResponseEntity.ok(bookingService.updateBooking(id, updateBooking));
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+        }
+    }
+
     @PutMapping("/booking/{id}/approve")
     public ResponseEntity<?> approveBookRoom(@PathVariable int id){
         try {
