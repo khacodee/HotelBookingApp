@@ -11,4 +11,6 @@ public interface IGuestService {
     Guest getGuestById(int id);
 
     List<Guest> getAllGuest();
+
+    Guest findGuestByBookingId(int id);
 }

@@ -40,7 +40,6 @@ public class UserService implements IUserService{
         UserInfo userInfo = userDetail.get();
         UserInformationDTO userInformationDTO = new UserInformationDTO();
         userInformationDTO.setName(userInfo.getUsername());
-        userInformationDTO.setEmail(userInfo.getEmail());
 
         return userInformationDTO;
 
@@ -49,14 +48,13 @@ public class UserService implements IUserService{
 
     @Override
     public String SignUp(UserDTO userDTO) {
-        if (userRepository.existsByUsernameOrEmail(userDTO.getUsername(), userDTO.getEmail())) {
+        if (userRepository.existsByUsername(userDTO.getUsername())) {
             throw new UserNotFoundException(USERNAME_OR_EMAIL_EXISTS);
         }
 
         UserInfo userEntity = new UserInfo();
         userEntity.setUsername(userDTO.getUsername());
         userEntity.setPassword(encoder.encode(userDTO.getPassword()));
-        userEntity.setEmail(userDTO.getEmail());
 
         Role role = roleRepository.findByName(ROLE_USER);
 
@@ -79,15 +77,14 @@ public class UserService implements IUserService{
         if(userInf == null){
             throw new UserNotFoundException(NOT_FOUND);
         }
-        boolean existingUser = userRepository.existsByUsernameOrEmail(userInfo.getUsername(), userInfo.getEmail());
-        if (existingUser && !userInf.getUsername().equals(userInfo.getUsername()) && !userInf.getEmail().equals(userInfo.getEmail())) {
+        boolean existingUser = userRepository.existsByUsername(userInfo.getUsername());
+        if (existingUser && !userInf.getUsername().equals(userInfo.getUsername())) {
             throw new UserNotFoundException(USERNAME_OR_EMAIL_EXISTS);
         }
         userInf.setUsername(userInfo.getUsername());
         if(!userInfo.getPassword().isEmpty()){
             userInf.setPassword(encoder.encode(userInfo.getPassword()));
         }
-        userInf.setEmail(userInfo.getEmail());
         Set<Role> updateRole = new HashSet<>();
         if(userInfo.getRoles() != null && !userInfo.getRoles().isEmpty()){
             for (Role role :
@@ -167,7 +164,7 @@ public class UserService implements IUserService{
 
     @Override
     public String addUser(UserInfo userInfo) {
-        if (userRepository.existsByUsernameOrEmail(userInfo.getUsername(), userInfo.getEmail())) {
+        if (userRepository.existsByUsername(userInfo.getUsername())) {
             throw new UserNotFoundException(USERNAME_OR_EMAIL_EXISTS);
         }
 

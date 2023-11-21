@@ -1,7 +1,11 @@
 package com.khacv.hotelbookingapp.controller.booking;
 
 import com.khacv.hotelbookingapp.dto.booking.BookingRoomDTO;
+import com.khacv.hotelbookingapp.entity.booking.Booking;
+import com.khacv.hotelbookingapp.entity.guest.Guest;
 import com.khacv.hotelbookingapp.service.booking.BookingService;
+import com.khacv.hotelbookingapp.service.email.EmailService;
+import com.khacv.hotelbookingapp.service.guest.GuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +20,10 @@ public class BookingController {
     @Autowired
     private final BookingService bookingService;
 
+    @Autowired
+    private GuestService guestService;
+    @Autowired
+    private EmailService emailService;
     public BookingController(BookingService bookingService) {
         this.bookingService = bookingService;
     }
@@ -39,6 +47,23 @@ public class BookingController {
         try {
         return ResponseEntity.ok(bookingService.getBookingById(id));
         }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+        }
+    }
+
+    @PostMapping("/confirm-booking/{id}")
+    public ResponseEntity<?> confirmBooking(@PathVariable int id) {
+        try {
+            Guest guestEmail = guestService.findGuestByBookingId(id);
+
+            // Xác nhận đơn đặt phòng với ID được cung cấp
+            bookingService.approveBookRoom(id);
+
+            // Sau khi xác nhận thành công, gửi email thông báo
+            emailService.sendApprovedEmail(id, guestEmail.getEmail());
+
+            return ResponseEntity.ok(MAIL_SUCCESSFULLY);
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
         }
     }
