@@ -13,30 +13,32 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static com.khacv.hotelbookingapp.util.Constants.*;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name ="room")
+@Table(name =ROOM)
 public class Room implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "room_id")
+    @Column(name = ROOM_ID)
     private int id;
-    @Column(name = "room_number")
+    @Column(name = ROOM_NUMBER)
     private int roomNumber;
-    @Column(name = "room_type")
+    @Column(name = ROOM_TYPE)
     private String roomType;
     private BigDecimal price;
-    @Column(name = "is_booked")
+    @Column(name = IS_BOOKED)
     private boolean isBooked;
 
     @ManyToOne
     @JsonBackReference
-    @JoinColumn(name = "hotel_id")
+    @JoinColumn(name = HOTEL_ID)
     private Hotel hotel;
 
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = ROOM, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<RoomImage> roomImages;
 

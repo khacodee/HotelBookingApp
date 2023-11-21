@@ -14,21 +14,23 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import static com.khacv.hotelbookingapp.util.Constants.*;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "booking")
+@Table(name = BOOKING)
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "booking_id")
+    @Column(name = BOOKING_ID)
     private int id;
-    @Column(name = "check_in_date")
+    @Column(name = CHECK_IN_DATE)
     private Date checkInDate;
-    @Column(name ="check_out_date")
+    @Column(name =CHECK_OUT_DATE)
     private Date checkOutDate;
-    @Column(name = "total_price")
+    @Column(name = TOTAL_PRICE)
     private BigDecimal totalPrice;
 
 

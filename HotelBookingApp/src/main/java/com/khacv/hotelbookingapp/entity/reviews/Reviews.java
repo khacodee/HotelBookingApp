@@ -10,27 +10,29 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+import static com.khacv.hotelbookingapp.util.Constants.*;
+
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "reviews")
+@Table(name = REVIEWS)
 public class Reviews {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "review_id")
+    @Column(name = REVIEW_ID)
     private int id;
     private int rating;
     private String comment;
-    @Column(name = "review_date")
+    @Column(name = REVIEW_DATE)
     private Date reviewDate;
     @ManyToOne
-    @JoinColumn(name = "hotel_id", nullable = false)
+    @JoinColumn(name = HOTEL_ID, nullable = false)
     @JsonBackReference
     private Hotel hotel;
 
     @ManyToOne
-    @JoinColumn(name = "guest_id", nullable = false)
+    @JoinColumn(name = GUEST_ID, nullable = false)
     @JsonBackReference
     private Guest guest;
 

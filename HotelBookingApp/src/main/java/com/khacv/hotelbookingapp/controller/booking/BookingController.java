@@ -14,7 +14,11 @@ import static com.khacv.hotelbookingapp.util.Messages.*;
 @RequestMapping("/app")
 public class BookingController {
     @Autowired
-    private BookingService bookingService;
+    private final BookingService bookingService;
+
+    public BookingController(BookingService bookingService) {
+        this.bookingService = bookingService;
+    }
 
     @GetMapping("/bookings")
     public ResponseEntity<?> getAllBookings(@RequestParam(required = false) String status){

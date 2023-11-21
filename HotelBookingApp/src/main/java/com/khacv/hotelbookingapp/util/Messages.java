@@ -14,7 +14,10 @@ public class Messages {
 
     public static final String ERROR = "Error!!";
 
+    public static final String TOKEN_EXPIRED = "Token has expired";
     public static final String INVALID_USERNAME_PASSWORD =  "Invalid username or password";
+
+    public static final String TOKEN_INVALID  = "Token is missing or invalid";
 
 
     //BOOKING

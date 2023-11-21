@@ -12,7 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/app")
 public class ReviewsController {
     @Autowired
-    private ReviewsService reviewsService;
+    private final ReviewsService reviewsService;
+
+    public ReviewsController(ReviewsService reviewsService) {
+        this.reviewsService = reviewsService;
+    }
 
     @GetMapping("/reviews")
     public ResponseEntity<?> getListReviews(){

@@ -5,16 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import static com.khacv.hotelbookingapp.util.Constants.*;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name ="permission")
+@Table(name =PERMISSION)
 public class Permission {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "permission_id")
+    @Column(name = PERMISSION_ID)
     private int id;
 
     private String name;

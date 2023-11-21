@@ -16,7 +16,11 @@ import static com.khacv.hotelbookingapp.util.Messages.*;
 public class AmenitiesController {
 
     @Autowired
-    private AmenitiesService amenitiesService;
+    private final AmenitiesService amenitiesService;
+
+    public AmenitiesController(AmenitiesService amenitiesService) {
+        this.amenitiesService = amenitiesService;
+    }
 
     @GetMapping("/amenities")
     public ResponseEntity<?> getListAmenities(){

@@ -1,11 +1,13 @@
 package com.khacv.hotelbookingapp.service.user;
 
 import com.khacv.hotelbookingapp.exception.TokenExpiredException;
+import com.khacv.hotelbookingapp.exception.UnauthorizedException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -15,12 +17,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+
+import static com.khacv.hotelbookingapp.util.Messages.*;
+import static com.khacv.hotelbookingapp.util.Constants.*;
+
 @Component
 public class JwtService {
 
     @Autowired
     private UserInfoService userInfoService;
-    public static final String SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
+
     public String generateToken(String username) {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, username);
@@ -67,7 +73,7 @@ public class JwtService {
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         if(isTokenExpired(token)) {
-            throw new TokenExpiredException("Token has expired");
+            throw new TokenExpiredException(TOKEN_EXPIRED);
         }
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
