@@ -11,28 +11,30 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.List;
 
+import static com.khacv.hotelbookingapp.util.Constants.*;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "guest")
+@Table(name = GUEST)
 public class Guest implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "guest_id")
+    @Column(name = GUEST_ID)
     private int id;
-    @Column(name = "full_name")
+    @Column(name = FULL_NAME)
     private String fullName;
     private String address;
-    @Column(name = "phone_number")
+    @Column(name = PHONE_NUMBER)
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "guest", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = GUEST, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Booking> bookings;
 
-    @OneToMany(mappedBy = "guest",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = GUEST,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Reviews> reviews;
 

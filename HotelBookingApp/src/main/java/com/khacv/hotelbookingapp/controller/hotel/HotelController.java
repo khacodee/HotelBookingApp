@@ -13,7 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/app")
 public class HotelController {
     @Autowired
-    private HotelService hotelService;
+    private final HotelService hotelService;
+
+    public HotelController(HotelService hotelService) {
+        this.hotelService = hotelService;
+    }
+
     @GetMapping("/hotels")
     public ResponseEntity<?> getListUser(){
         return ResponseEntity.ok(hotelService.getListHotel());

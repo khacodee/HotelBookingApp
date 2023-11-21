@@ -13,7 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class RoomImageController {
 
     @Autowired
-    RoomImagesService roomImagesService;
+    private final RoomImagesService roomImagesService;
+
+    public RoomImageController(RoomImagesService roomImagesService) {
+        this.roomImagesService = roomImagesService;
+    }
+
     @GetMapping("/images")
     public ResponseEntity<?> getListRoomImage(){
         return ResponseEntity.ok(roomImagesService.getListRoomImage());

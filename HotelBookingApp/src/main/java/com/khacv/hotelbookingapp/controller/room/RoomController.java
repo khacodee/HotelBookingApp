@@ -11,7 +11,11 @@ import org.springframework.web.bind.annotation.*;
 public class RoomController {
 
     @Autowired
-    private RoomService roomService;
+    private final RoomService roomService;
+
+    public RoomController(RoomService roomService) {
+        this.roomService = roomService;
+    }
 
     @GetMapping("/rooms")
     public ResponseEntity<?> getRooms(@RequestParam(name = "available", required = false, defaultValue = "false") boolean onlyAvailable) {

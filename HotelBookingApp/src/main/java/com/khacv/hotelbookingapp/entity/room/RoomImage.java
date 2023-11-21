@@ -9,18 +9,20 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+import static com.khacv.hotelbookingapp.util.Constants.*;
+
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "room_images")
+@Table(name =ROOM_IMAGES)
 public class RoomImage implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "image_id")
+    @Column(name = IMAGE_ID)
     private int imageId;
     @ManyToOne
-    @JoinColumn(name = "room_id")
+    @JoinColumn(name = ROOM_ID)
     @JsonBackReference
     private Room room;
     private String imageUrl;

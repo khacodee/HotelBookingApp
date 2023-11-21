@@ -75,6 +75,32 @@ public class BookingService implements IBookingService{
     }
 
     @Override
+    public String updateBooking(int id, BookingRoomDTO updateBooking) {
+        Booking booking = bookingRepository.findById(id);
+
+        booking.setCheckInDate(updateBooking.getCheckInDate());
+        booking.setCheckOutDate(updateBooking.getCheckOutDate());
+        booking.setTotalPrice(updateBooking.getTotalPrice());
+        booking.setBookingStatus(updateBooking.getBookingStatus());
+        Guest guest = guestRepository.findById(updateBooking.getGuestId());
+        if(guest == null){
+            throw new NotFoundException(NOT_FOUND);
+        }
+        booking.setGuest(guest);
+        Room room = roomRepository.findById(updateBooking.getRoomId());
+        if (room == null) {
+
+            throw new NotFoundException(NOT_FOUND);
+        }
+        booking.setRoom(room);
+
+        bookingRepository.save(booking);
+
+        return UPDATE_SUCCESSFUL;
+    }
+
+
+    @Override
     public String approveBookRoom(int id){
         Booking booking = bookingRepository.findById(id);
 
