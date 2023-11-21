@@ -58,11 +58,11 @@ public class UserService implements IUserService{
         userEntity.setPassword(encoder.encode(userDTO.getPassword()));
         userEntity.setEmail(userDTO.getEmail());
 
-        Role role = roleRepository.findByName(USER_ROLE);
+        Role role = roleRepository.findByName(ROLE_USER);
 
         if (role == null) {
             role = new Role();
-            role.setName(USER_ROLE);
+            role.setName(ROLE_USER);
             roleRepository.save(role);
         }
 

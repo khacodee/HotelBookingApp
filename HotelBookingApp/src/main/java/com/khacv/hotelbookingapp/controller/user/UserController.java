@@ -8,7 +8,6 @@ import com.khacv.hotelbookingapp.exception.UnauthorizedException;
 import com.khacv.hotelbookingapp.repository.user.UserInfoRepository;
 import com.khacv.hotelbookingapp.service.user.JwtService;
 import com.khacv.hotelbookingapp.service.user.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,15 +25,22 @@ import static com.khacv.hotelbookingapp.util.Messages.INVALID_USERNAME_PASSWORD;
 @RequestMapping("/auth")
 public class UserController {
     @Autowired
-    private UserService service;
+    private final UserService service;
 
     @Autowired
-    private JwtService jwtService;
+    private final JwtService jwtService;
 
     @Autowired
-    private UserInfoRepository userInfoRepository;
+    private final UserInfoRepository userInfoRepository;
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
+
+    public UserController(UserService service, JwtService jwtService, UserInfoRepository userInfoRepository, AuthenticationManager authenticationManager) {
+        this.service = service;
+        this.jwtService = jwtService;
+        this.userInfoRepository = userInfoRepository;
+        this.authenticationManager = authenticationManager;
+    }
 
     @GetMapping("/welcome")
     public ResponseEntity<?> welcome() {

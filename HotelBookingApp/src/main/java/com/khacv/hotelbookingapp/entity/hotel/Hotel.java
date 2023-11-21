@@ -15,40 +15,42 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.khacv.hotelbookingapp.util.Constants.*;
+
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "hotel")
+@Table(name = HOTEL)
 public class Hotel implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = ID)
     private int id;
     private String name;
     private String location;
     private String description;
-    @Column(name = "image_url")
+    @Column(name = IMAGE_URL)
     private String image;
     private BigDecimal price;
 
 
 
-    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = HOTEL, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Room> rooms;
 
 
     @ManyToMany(fetch =  FetchType.LAZY)
     @JoinTable(
-            name = "hotel_amenities",
-            joinColumns = @JoinColumn(name = "hotel_id"),
-            inverseJoinColumns = @JoinColumn(name = "amenity_id")
+            name = HOTEL_AMENITIES,
+            joinColumns = @JoinColumn(name = HOTEL_ID),
+            inverseJoinColumns = @JoinColumn(name = AMENITIES_ID)
     )
     private  Set<Amenities> amenities = new HashSet<>();
 
 
-    @OneToMany(mappedBy = "hotel",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = HOTEL,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Reviews> reviews;
 

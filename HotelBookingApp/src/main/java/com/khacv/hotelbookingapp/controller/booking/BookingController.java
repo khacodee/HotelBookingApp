@@ -14,7 +14,11 @@ import static com.khacv.hotelbookingapp.util.Messages.*;
 @RequestMapping("/app")
 public class BookingController {
     @Autowired
-    private BookingService bookingService;
+    private final BookingService bookingService;
+
+    public BookingController(BookingService bookingService) {
+        this.bookingService = bookingService;
+    }
 
     @GetMapping("/bookings")
     public ResponseEntity<?> getAllBookings(@RequestParam(required = false) String status){
@@ -44,6 +48,16 @@ public class BookingController {
     public ResponseEntity<?> createBookingRoom(@RequestBody BookingRoomDTO bookingRoomDTO){
         try {
             return ResponseEntity.ok(bookingService.createBooking(bookingRoomDTO));
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+        }
+    }
+
+    @PutMapping("/booking/{id}")
+    public ResponseEntity<?> updateBookingRoom (@PathVariable int id, @RequestBody BookingRoomDTO updateBooking){
+        try {
+            return ResponseEntity.ok(bookingService.updateBooking(id, updateBooking));
         }
         catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());

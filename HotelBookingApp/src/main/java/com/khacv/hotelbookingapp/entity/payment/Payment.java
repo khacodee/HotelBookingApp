@@ -10,24 +10,26 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import static com.khacv.hotelbookingapp.util.Constants.*;
+
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "payment")
+@Table(name = PAYMENT)
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "payment_id")
+    @Column(name = PAYMENT_ID)
     private int id;
-    @Column(name="payment_date")
+    @Column(name= PAYMENT_DATE)
     private Date paymentDate;
     private BigDecimal amount;
-    @Column(name="card_number")
+    @Column(name= CARD_NUMBER)
     private String cardNumber;
 
     @ManyToOne
-    @JoinColumn(name = "booking_id", nullable = false)
+    @JoinColumn(name = BOOKING_ID, nullable = false)
     @JsonBackReference
     private Booking booking;
 

@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/app")
 public class GuestController {
     @Autowired
-    private GuestService guestService;
+    private final GuestService guestService;
+
+    public GuestController(GuestService guestService) {
+        this.guestService = guestService;
+    }
 
 
     @GetMapping("/guest")

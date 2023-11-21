@@ -41,7 +41,7 @@ public class SecurityConfig {
                         authorizeRequests
                                 //.requestMatchers(HttpMethod.POST, "/auth/welcome", "/auth/addNewUser", "/auth/generateToken").permitAll()
                                 .requestMatchers("/app/**").permitAll()
-                                .requestMatchers("/auth/user/**", "/auth/admin/**").authenticated()
+                                .requestMatchers("/auth/users/**", "/auth/admin/**").authenticated()
                 )
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)

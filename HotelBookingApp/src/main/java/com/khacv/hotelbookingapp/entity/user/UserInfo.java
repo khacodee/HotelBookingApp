@@ -8,24 +8,26 @@ import lombok.NoArgsConstructor;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.khacv.hotelbookingapp.util.Constants.*;
+
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user")
+@Table(name = USER)
 public class UserInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = USER_ID)
     private int id;
     private String username;
     private String email;
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
+            name = USER_ROLE,
+            joinColumns = @JoinColumn(name = USER_ID),
+            inverseJoinColumns = @JoinColumn(name = ROLE_ID)
     )
     private Set<Role> roles = new HashSet<>();
 
