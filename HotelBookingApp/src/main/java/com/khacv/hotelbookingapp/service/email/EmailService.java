@@ -28,14 +28,16 @@ public class EmailService implements IEmailService{
             String emailContent = APPROVE_BOOK +
                     DATE_CHECK_IN + booking.getCheckInDate() +BR +
                     DATE_CHECK_OUT + booking.getCheckOutDate() + BR+
-                    PHONE + booking.getRoom().getRoomNumber() + BR +
-                    HOTEL_NAME + booking.getRoom().getHotel().getName();
+                    ROOM_NUMBER_BOOK + booking.getRoom().getRoomNumber() + BR +
+                    HOTEL_NAME + booking.getRoom().getHotel().getName() + BR + BR +
+                    "Booker information:<br>" +
+                    "Full Name: " + booking.getGuest().getFullName() + BR +
+                    "Email: " + booking.getGuest().getEmail() + "<br>" +
+                    "Phone Number: " + booking.getGuest().getPhoneNumber();
             helper.setTo(recipientEmail);
             helper.setSubject(RESERVATION_APPROVED);
             helper.setText(emailContent, true);
-
             mailSender.send(message);
-
         } catch (MessagingException e) {
             e.printStackTrace();
         }

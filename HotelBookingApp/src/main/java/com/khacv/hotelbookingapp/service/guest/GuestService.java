@@ -3,6 +3,7 @@ package com.khacv.hotelbookingapp.service.guest;
 import com.khacv.hotelbookingapp.dto.guest.GuestDTO;
 import com.khacv.hotelbookingapp.entity.booking.Booking;
 import com.khacv.hotelbookingapp.entity.guest.Guest;
+import com.khacv.hotelbookingapp.exception.NotFoundException;
 import com.khacv.hotelbookingapp.repository.booking.BookingRepository;
 import com.khacv.hotelbookingapp.repository.guest.GuestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,11 @@ public class GuestService implements IGuestService {
 
     @Override
     public Guest getGuestById(int id){
-        return guestRepository.findById(id);
+        Guest guest = guestRepository.findById(id);
+        if(guest == null){
+            throw new NotFoundException("Not Found");
+        }
+        return guest;
     }
 
     @Override

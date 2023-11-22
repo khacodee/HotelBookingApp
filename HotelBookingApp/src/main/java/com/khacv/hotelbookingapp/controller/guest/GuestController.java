@@ -1,10 +1,12 @@
 package com.khacv.hotelbookingapp.controller.guest;
 
 import com.khacv.hotelbookingapp.dto.guest.GuestDTO;
+import com.khacv.hotelbookingapp.exception.ErrorResponese;
 import com.khacv.hotelbookingapp.service.guest.GuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 
 import static com.khacv.hotelbookingapp.util.Messages.*;
@@ -31,11 +33,12 @@ public class GuestController {
     }
     @GetMapping("/guest/{id}")
     public ResponseEntity<?> getGuestById(@PathVariable int id){
-        try {
+//        try {
         return ResponseEntity.ok(guestService.getGuestById(id));
-        }catch (Exception e){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
-        }
+//        }catch (Exception e){
+//            ErrorResponese errorResponse = new ErrorResponese(HttpStatus.NOT_FOUND,  e.getMessage());
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+//        }
     }
 
     @PutMapping("/guest/{id}")
@@ -43,7 +46,8 @@ public class GuestController {
         try {
         return ResponseEntity.ok(guestService.updateGuestProfile(id, guest));
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+            ErrorResponese errorResponse = new ErrorResponese(HttpStatus.BAD_REQUEST, "Error occurred: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
     }
 }
