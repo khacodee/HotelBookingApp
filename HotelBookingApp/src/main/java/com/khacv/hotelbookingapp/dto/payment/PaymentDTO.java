@@ -1,4 +1,4 @@
-package com.khacv.hotelbookingapp.entity.payment;
+package com.khacv.hotelbookingapp.dto.payment;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.khacv.hotelbookingapp.entity.booking.Booking;
@@ -12,23 +12,13 @@ import java.util.Date;
 
 import static com.khacv.hotelbookingapp.util.Constants.*;
 
-@Entity
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = PAYMENT)
-public class Payment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = PAYMENT_ID)
-    private int id;
-    @Column(name= PAYMENT_DATE)
+@Data
+public class PaymentDTO {
+
     private Date paymentDate;
     private BigDecimal amount;
     private String status;
-    @ManyToOne
-    @JoinColumn(name = BOOKING_ID, nullable = false)
-    @JsonBackReference
-    private Booking booking;
-
+    private int bookingId;
 }

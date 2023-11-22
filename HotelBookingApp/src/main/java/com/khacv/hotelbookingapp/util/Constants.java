@@ -102,7 +102,7 @@ public class Constants {
     public static final String DATE_CHECK_IN = "Date check In: ";
     public static final String DATE_CHECK_OUT = "Date check Out: ";
 
-    public static final String PHONE = "Phone Number: ";
+    public static final String ROOM_NUMBER_BOOK = "Room Number: ";
 
     public static final String HOTEL_NAME = "Hotel Name: ";
 }
