@@ -108,5 +108,14 @@ public class BookingController {
         }
     }
 
+    @DeleteMapping("/booking/{id}")
+    public ResponseEntity<?> deleteBooking(@PathVariable int id){
+        try {
+            return ResponseEntity.ok(bookingService.deleteBooking(id));
+        }
+        catch (Exception e){
+            throw new IllegalArgumentException(BAD_REQUEST);
+        }
+    }
 
 }
