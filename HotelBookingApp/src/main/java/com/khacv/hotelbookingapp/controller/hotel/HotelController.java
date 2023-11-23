@@ -61,4 +61,14 @@ public class HotelController {
             throw new IllegalArgumentException(e.getMessage());
         }
     }
+
+    @DeleteMapping("/hotels/{id}")
+    public ResponseEntity<?> deleteHotel(@PathVariable int id){
+        try {
+            return ResponseEntity.ok(hotelService.deleteHotel(id));
+        }
+        catch (Exception e){
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
 }
