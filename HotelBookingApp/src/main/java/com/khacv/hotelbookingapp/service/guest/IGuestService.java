@@ -13,4 +13,6 @@ public interface IGuestService {
     List<Guest> getAllGuest();
 
     Guest findGuestByBookingId(int id);
+
+    String createGuest(GuestDTO guestDTO);
 }

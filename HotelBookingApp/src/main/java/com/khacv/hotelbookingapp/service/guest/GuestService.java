@@ -36,6 +36,16 @@ public class GuestService implements IGuestService {
     }
 
     @Override
+    public String createGuest(GuestDTO guestDTO){
+        Guest newGuest = new Guest();
+        newGuest.setFullName(guestDTO.getFullName());
+        newGuest.setAddress(guestDTO.getAddress());
+        newGuest.setPhoneNumber(guestDTO.getPhoneNumber());
+        guestRepository.save(newGuest);
+        return ADDED_SUCCESSFULLY;
+    }
+
+    @Override
     public Guest getGuestById(int id){
         Guest guest = guestRepository.findById(id);
         if(guest == null){
@@ -47,7 +57,9 @@ public class GuestService implements IGuestService {
     @Override
     public String updateGuestProfile(int guestId, GuestDTO guestDTO){
         Guest existingGuest = guestRepository.findById(guestId);
-        if(existingGuest != null){
+        if(existingGuest == null){
+            throw new NotFoundException("Not Found");
+        }
             existingGuest.setFullName(guestDTO.getFullName());
             existingGuest.setAddress(guestDTO.getAddress());
             existingGuest.setPhoneNumber(guestDTO.getPhoneNumber());
@@ -55,8 +67,8 @@ public class GuestService implements IGuestService {
              guestRepository.save(existingGuest);
 
              return UPDATE_SUCCESSFUL;
-        }
-        return null;
+
+
     }
 
 }
