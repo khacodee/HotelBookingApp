@@ -18,8 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import static com.khacv.hotelbookingapp.util.Messages.ERROR;
-import static com.khacv.hotelbookingapp.util.Messages.INVALID_USERNAME_PASSWORD;
+import static com.khacv.hotelbookingapp.util.Messages.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -107,7 +106,7 @@ public class UserController {
         try {
         return ResponseEntity.ok(service.deleteUser(id));
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(BAD_REQUEST);
         }
     }
 

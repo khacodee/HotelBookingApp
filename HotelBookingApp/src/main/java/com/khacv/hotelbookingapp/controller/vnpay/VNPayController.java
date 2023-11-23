@@ -4,7 +4,12 @@ import com.khacv.hotelbookingapp.dto.payment.PaymentDTO;
 import com.khacv.hotelbookingapp.dto.payment.PaymentResDTO;
 import com.khacv.hotelbookingapp.dto.payment.TransactionDTO;
 import com.khacv.hotelbookingapp.entity.booking.Booking;
+import com.khacv.hotelbookingapp.entity.guest.Guest;
+import com.khacv.hotelbookingapp.repository.booking.BookingRepository;
+import com.khacv.hotelbookingapp.repository.guest.GuestRepository;
 import com.khacv.hotelbookingapp.service.booking.BookingService;
+import com.khacv.hotelbookingapp.service.email.EmailService;
+import com.khacv.hotelbookingapp.service.guest.GuestService;
 import com.khacv.hotelbookingapp.service.payment.PaymentService;
 import com.khacv.hotelbookingapp.vnpay.Config;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +30,11 @@ import java.util.*;
 public class VNPayController {
 
     @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private GuestService guestService;
+    @Autowired
     private BookingService bookingService;
     @Autowired
     private PaymentService paymentService;
@@ -43,7 +53,7 @@ public class VNPayController {
         long amount = amountDecimal.longValue();
         String vnp_TxnRef = Config.getRandomNumber(8);
         String vnp_IpAdr ="127.0.0.1";
-        String bankCode = "NCB";
+        //String bankCode = "NCB";
         String vnp_TmnCode = Config.vnp_TmnCode;
 
         Map<String, String> vnp_Params = new HashMap<>();
@@ -52,7 +62,7 @@ public class VNPayController {
         vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
         vnp_Params.put("vnp_Amount", String.valueOf(amount));
         vnp_Params.put("vnp_CurrCode", "VND");
-        vnp_Params.put("vnp_BankCode", bankCode);
+        vnp_Params.put("vnp_BankCode", "");
         vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
         vnp_Params.put("vnp_ReturnUrl", Config.vnp_ReturnUrl);
         vnp_Params.put("vnp_OrderType", Config.orderType);
@@ -149,6 +159,13 @@ public class VNPayController {
             paymentDTO.setStatus("SUCCESSFULLY");
 
             paymentService.createPayment(paymentDTO);
+
+            Guest guestEmail = guestService.findGuestByBookingId(bookingId);
+
+            bookingService.approveBookRoom(bookingId);
+
+
+            emailService.sendApprovedEmail(bookingId, guestEmail.getEmail());
         }else {
             transactionDTO.setStatus("No");
             transactionDTO.setMessage("Failed");

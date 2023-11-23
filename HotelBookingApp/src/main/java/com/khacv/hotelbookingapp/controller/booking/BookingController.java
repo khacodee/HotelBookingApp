@@ -3,6 +3,7 @@ package com.khacv.hotelbookingapp.controller.booking;
 import com.khacv.hotelbookingapp.dto.booking.BookingRoomDTO;
 import com.khacv.hotelbookingapp.entity.booking.Booking;
 import com.khacv.hotelbookingapp.entity.guest.Guest;
+import com.khacv.hotelbookingapp.exception.IllegalArgumentException;
 import com.khacv.hotelbookingapp.service.booking.BookingService;
 import com.khacv.hotelbookingapp.service.email.EmailService;
 import com.khacv.hotelbookingapp.service.guest.GuestService;
@@ -37,34 +38,32 @@ public class BookingController {
             return ResponseEntity.ok(bookingService.getListBooking());
         }
         }catch (Exception e){
-           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(BAD_REQUEST);
         }
     }
 
 
     @GetMapping("/booking/{id}")
     public ResponseEntity<?> getBookById(@PathVariable int id){
-        try {
-        return ResponseEntity.ok(bookingService.getBookingById(id));
-        }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
-        }
+
+            return ResponseEntity.ok(bookingService.getBookingById(id));
+
+
     }
 
-    @PostMapping("/confirm-booking/{id}")
-    public ResponseEntity<?> confirmBooking(@PathVariable int id) {
+    @PostMapping("/confirm-booking/{bookingId}")
+    public ResponseEntity<?> confirmBooking(@PathVariable int bookingId) {
         try {
-            Guest guestEmail = guestService.findGuestByBookingId(id);
+            Guest guestEmail = guestService.findGuestByBookingId(bookingId);
 
-            // Xác nhận đơn đặt phòng với ID được cung cấp
-            bookingService.approveBookRoom(id);
+            bookingService.approveBookRoom(bookingId);
 
-            // Sau khi xác nhận thành công, gửi email thông báo
-            emailService.sendApprovedEmail(id, guestEmail.getEmail());
+
+            emailService.sendApprovedEmail(bookingId, guestEmail.getEmail());
 
             return ResponseEntity.ok(MAIL_SUCCESSFULLY);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(BAD_REQUEST);
         }
     }
 
@@ -75,7 +74,7 @@ public class BookingController {
             return ResponseEntity.ok(bookingService.createBooking(bookingRoomDTO));
         }
         catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(BAD_REQUEST);
         }
     }
 
@@ -85,7 +84,7 @@ public class BookingController {
             return ResponseEntity.ok(bookingService.updateBooking(id, updateBooking));
         }
         catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(BAD_REQUEST);
         }
     }
 

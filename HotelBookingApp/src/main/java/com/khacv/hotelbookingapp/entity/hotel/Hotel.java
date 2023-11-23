@@ -33,6 +33,7 @@ public class Hotel implements Serializable {
     @Column(name = IMAGE_URL)
     private String image;
     private BigDecimal price;
+    private boolean isActive;
 
 
 
