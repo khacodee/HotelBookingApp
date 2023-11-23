@@ -46,6 +46,16 @@ public class GuestService implements IGuestService {
     }
 
     @Override
+    public String deleteGuest(int id) {
+        Guest guest = guestRepository.findById(id);
+        if(guest == null){
+            throw new NotFoundException("Not Found");
+        }
+        guestRepository.delete(guest);
+        return DELETE_SUCCESSFUL;
+    }
+
+    @Override
     public Guest getGuestById(int id){
         Guest guest = guestRepository.findById(id);
         if(guest == null){

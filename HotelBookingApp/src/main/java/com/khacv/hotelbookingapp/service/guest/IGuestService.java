@@ -15,4 +15,6 @@ public interface IGuestService {
     Guest findGuestByBookingId(int id);
 
     String createGuest(GuestDTO guestDTO);
+
+    String deleteGuest(int id);
 }
