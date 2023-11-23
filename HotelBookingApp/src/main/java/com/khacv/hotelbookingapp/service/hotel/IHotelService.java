@@ -13,4 +13,6 @@ public interface IHotelService {
     String createHotel(HotelDTO hotelDTO);
 
     String updateHotel(int id, HotelDTO updateHotel);
+
+    String deleteHotel(int id);
 }
