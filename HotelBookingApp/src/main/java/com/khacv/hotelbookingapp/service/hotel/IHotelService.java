@@ -11,4 +11,6 @@ public interface IHotelService {
     Hotel getHotelById(int id);
 
     String createHotel(HotelDTO hotelDTO);
+
+    String updateHotel(int id, HotelDTO updateHotel);
 }
