@@ -16,4 +16,6 @@ public interface IBookingService {
     String approveBookRoom(int id);
     String rejectedBookRoom(int id);
     List<Booking> getListBookingApprove();
+
+    String deleteBooking(int id);
 }
