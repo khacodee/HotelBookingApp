@@ -70,5 +70,15 @@ public class HotelService implements IHotelService {
         return UPDATE_SUCCESSFUL;
     }
 
+    @Override
+    public String deleteHotel(int id) {
+        Hotel hotel = hotelRepository.findById(id);
+       if(hotel == null){
+           throw new NotFoundException(NOT_FOUND);
+       }
+        hotelRepository.delete(hotel);
+        return DELETE_SUCCESSFUL;
+    }
+
 
 }
