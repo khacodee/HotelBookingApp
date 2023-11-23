@@ -154,4 +154,14 @@ public class BookingService implements IBookingService{
 
         return result;
     }
+
+    @Override
+    public String deleteBooking(int id) {
+        Booking booking = bookingRepository.findById(id);
+        if(booking == null){
+            throw new NotFoundException(NOT_FOUND);
+        }
+        bookingRepository.delete(booking);
+        return DELETE_SUCCESSFUL;
+    }
 }
