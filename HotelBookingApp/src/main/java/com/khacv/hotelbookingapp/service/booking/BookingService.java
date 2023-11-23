@@ -12,7 +12,10 @@ import com.khacv.hotelbookingapp.repository.room.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.khacv.hotelbookingapp.util.Constants.*;
 import static com.khacv.hotelbookingapp.util.Messages.*;
@@ -51,11 +54,6 @@ public class BookingService implements IBookingService{
     public String createBooking(BookingRoomDTO bookingRoomDTO){
         Booking booking = new Booking();
 
-        booking.setCheckInDate(bookingRoomDTO.getCheckInDate());
-        booking.setCheckOutDate(bookingRoomDTO.getCheckOutDate());
-        booking.setTotalPrice(bookingRoomDTO.getTotalPrice());
-        booking.setBookingStatus(PENDING);
-
         Guest guest = guestRepository.findById(bookingRoomDTO.getGuestId());
         if(guest == null){
             throw new NotFoundException(NOT_FOUND);
@@ -66,12 +64,27 @@ public class BookingService implements IBookingService{
 
             throw new NotFoundException(NOT_FOUND);
         }
+        if(room.isBooked()){
+            throw new NotFoundException("Room booked");
+        }
         booking.setRoom(room);
+        booking.setCheckInDate(bookingRoomDTO.getCheckInDate());
+        booking.setCheckOutDate(bookingRoomDTO.getCheckOutDate());
+
+        BigDecimal numberOfDays = new BigDecimal(calculateStayDuration(bookingRoomDTO.getCheckInDate(), bookingRoomDTO.getCheckOutDate()));
+
+        BigDecimal totalPrice = numberOfDays.multiply(room.getPrice());
+        booking.setTotalPrice(totalPrice);
+        booking.setBookingStatus(PENDING);
 
         bookingRepository.save(booking);
 
         return ADDED_SUCCESSFULLY;
 
+    }
+    private long calculateStayDuration(Date checkInDate, Date checkOutDate) {
+        long diffInMillies = Math.abs(checkOutDate.getTime() - checkInDate.getTime());
+        return TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -108,6 +121,8 @@ public class BookingService implements IBookingService{
             throw new NotFoundException(NOT_FOUND);
         }
         booking.setBookingStatus(CONFIRMED);
+
+        booking.getRoom().setBooked(true);
 
         bookingRepository.save(booking);
 
