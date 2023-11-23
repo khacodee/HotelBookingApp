@@ -47,8 +47,7 @@ public class GuestController {
         try {
         return ResponseEntity.ok(guestService.updateGuestProfile(id, guest));
         }catch (Exception e){
-            ErrorResponese errorResponse = new ErrorResponese(HttpStatus.BAD_REQUEST, "Error occurred: " + e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -56,6 +55,15 @@ public class GuestController {
     public ResponseEntity<?> createGuest(@RequestBody GuestDTO guestDTO){
         try {
         return ResponseEntity.ok(guestService.createGuest(guestDTO));
+        }catch (Exception e){
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/guest/{id}")
+    public ResponseEntity<?> deleteGuest(@PathVariable int id){
+        try {
+        return ResponseEntity.ok(guestService.deleteGuest(id));
         }catch (Exception e){
             throw new IllegalArgumentException(e.getMessage());
         }
