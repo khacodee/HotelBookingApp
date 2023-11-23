@@ -3,6 +3,7 @@ package com.khacv.hotelbookingapp.service.hotel;
 
 import com.khacv.hotelbookingapp.dto.hotel.HotelDTO;
 import com.khacv.hotelbookingapp.entity.hotel.Hotel;
+import com.khacv.hotelbookingapp.exception.NotFoundException;
 import com.khacv.hotelbookingapp.repository.hotel.HotelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,6 +53,21 @@ public class HotelService implements IHotelService {
         hotelRepository.save(newHotel);
 
         return ADDED_SUCCESSFULLY;
+    }
+
+    @Override
+    public String updateHotel(int id, HotelDTO updateHotel) {
+        Hotel hotel = hotelRepository.findById(id);
+        if(hotel == null){
+            throw new NotFoundException(NOT_FOUND);
+        }
+        hotel.setName(updateHotel.getName());
+        hotel.setLocation(updateHotel.getLocation());
+        hotel.setDescription(updateHotel.getDescription());
+        hotel.setImage(updateHotel.getImage());
+        hotel.setPrice(updateHotel.getPrice());
+        hotel.setActive(updateHotel.getIsActive());
+        return UPDATE_SUCCESSFUL;
     }
 
 
