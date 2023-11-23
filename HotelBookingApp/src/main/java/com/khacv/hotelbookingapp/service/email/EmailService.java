@@ -19,7 +19,7 @@ public class EmailService implements IEmailService{
 
     @Autowired
     private BookingRepository bookingRepository;
-    public String sendApprovedEmail(int bookingId, String recipientEmail) {
+    public void sendApprovedEmail(int bookingId, String recipientEmail) {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
@@ -42,6 +42,5 @@ public class EmailService implements IEmailService{
             e.printStackTrace();
         }
 
-        return MAIL_SUCCESSFULLY;
     }
 }

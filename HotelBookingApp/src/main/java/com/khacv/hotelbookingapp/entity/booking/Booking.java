@@ -1,6 +1,7 @@
 package com.khacv.hotelbookingapp.entity.booking;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.khacv.hotelbookingapp.entity.guest.Guest;
 import com.khacv.hotelbookingapp.entity.payment.Payment;
@@ -27,8 +28,10 @@ public class Booking {
     @Column(name = BOOKING_ID)
     private int id;
     @Column(name = CHECK_IN_DATE)
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date checkInDate;
     @Column(name =CHECK_OUT_DATE)
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date checkOutDate;
     @Column(name = TOTAL_PRICE)
     private BigDecimal totalPrice;
