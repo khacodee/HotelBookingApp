@@ -71,4 +71,14 @@ public class HotelController {
             throw new IllegalArgumentException(e.getMessage());
         }
     }
+
+    @PutMapping("/active-hotel/{id}")
+    public ResponseEntity<?> ActiveHotel(@PathVariable int id){
+        try {
+            return ResponseEntity.ok(hotelService.ActiveHotel(id));
+        }
+        catch (Exception e){
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
 }

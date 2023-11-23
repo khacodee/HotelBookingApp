@@ -15,4 +15,6 @@ public interface IHotelService {
     String updateHotel(int id, HotelDTO updateHotel);
 
     String deleteHotel(int id);
+
+    String ActiveHotel(int id);
 }
