@@ -2,6 +2,7 @@ package com.khacv.hotelbookingapp.controller.guest;
 
 import com.khacv.hotelbookingapp.dto.guest.GuestDTO;
 import com.khacv.hotelbookingapp.exception.ErrorResponese;
+import com.khacv.hotelbookingapp.exception.IllegalArgumentException;
 import com.khacv.hotelbookingapp.service.guest.GuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,6 +49,15 @@ public class GuestController {
         }catch (Exception e){
             ErrorResponese errorResponse = new ErrorResponese(HttpStatus.BAD_REQUEST, "Error occurred: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        }
+    }
+
+    @PostMapping("/guest")
+    public ResponseEntity<?> createGuest(@RequestBody GuestDTO guestDTO){
+        try {
+        return ResponseEntity.ok(guestService.createGuest(guestDTO));
+        }catch (Exception e){
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 }
