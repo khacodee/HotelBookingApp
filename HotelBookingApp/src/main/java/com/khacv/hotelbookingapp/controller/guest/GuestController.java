@@ -29,17 +29,16 @@ public class GuestController {
 
         return ResponseEntity.ok(guestService.getAllGuest());
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
     @GetMapping("/guest/{id}")
     public ResponseEntity<?> getGuestById(@PathVariable int id){
-//        try {
+        try {
         return ResponseEntity.ok(guestService.getGuestById(id));
-//        }catch (Exception e){
-//            ErrorResponese errorResponse = new ErrorResponese(HttpStatus.NOT_FOUND,  e.getMessage());
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-//        }
+        }catch (Exception e){
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 
     @PutMapping("/guest/{id}")

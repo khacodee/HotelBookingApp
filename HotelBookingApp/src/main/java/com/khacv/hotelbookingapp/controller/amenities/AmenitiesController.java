@@ -1,5 +1,6 @@
 package com.khacv.hotelbookingapp.controller.amenities;
 
+import com.khacv.hotelbookingapp.exception.IllegalArgumentException;
 import com.khacv.hotelbookingapp.service.amenities.AmenitiesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,7 @@ public class AmenitiesController {
         }
         catch (Exception e)
         {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ERROR+ e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -44,7 +45,7 @@ public class AmenitiesController {
         }
         catch (Exception e)
         {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 

@@ -1,6 +1,7 @@
 package com.khacv.hotelbookingapp.controller.room;
 
 import com.khacv.hotelbookingapp.dto.room.RoomDTO;
+import com.khacv.hotelbookingapp.exception.IllegalArgumentException;
 import com.khacv.hotelbookingapp.service.room.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ public class RoomController {
             return ResponseEntity.ok(roomService.getListRoom());
         }
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -40,7 +41,7 @@ public class RoomController {
         try {
         return ResponseEntity.ok(roomService.getRoomById(id));
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -49,7 +50,7 @@ public class RoomController {
         try {
         return ResponseEntity.ok(roomService.createRoom(roomDTO));
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -59,7 +60,7 @@ public class RoomController {
         try {
         return ResponseEntity.ok(roomService.updateRoom(id, roomUpdate));
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -68,7 +69,7 @@ public class RoomController {
         try {
         return ResponseEntity.ok(roomService.deleteRoom(id));
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 }

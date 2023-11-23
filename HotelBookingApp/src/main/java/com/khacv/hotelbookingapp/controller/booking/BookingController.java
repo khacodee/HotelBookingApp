@@ -63,7 +63,7 @@ public class BookingController {
 
             return ResponseEntity.ok(MAIL_SUCCESSFULLY);
         } catch (Exception e) {
-            throw new IllegalArgumentException(BAD_REQUEST);
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -74,7 +74,7 @@ public class BookingController {
             return ResponseEntity.ok(bookingService.createBooking(bookingRoomDTO));
         }
         catch (Exception e){
-            throw new IllegalArgumentException(BAD_REQUEST);
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -84,7 +84,7 @@ public class BookingController {
             return ResponseEntity.ok(bookingService.updateBooking(id, updateBooking));
         }
         catch (Exception e){
-            throw new IllegalArgumentException(BAD_REQUEST);
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -94,7 +94,7 @@ public class BookingController {
             return ResponseEntity.ok(bookingService.approveBookRoom(id));
         }
         catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -104,7 +104,7 @@ public class BookingController {
             return ResponseEntity.ok(bookingService.rejectedBookRoom(id));
         }
         catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -114,7 +114,7 @@ public class BookingController {
             return ResponseEntity.ok(bookingService.deleteBooking(id));
         }
         catch (Exception e){
-            throw new IllegalArgumentException(BAD_REQUEST);
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 

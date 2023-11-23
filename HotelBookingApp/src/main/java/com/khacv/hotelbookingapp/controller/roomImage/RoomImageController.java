@@ -1,5 +1,6 @@
 package com.khacv.hotelbookingapp.controller.roomImage;
 
+import com.khacv.hotelbookingapp.exception.IllegalArgumentException;
 import com.khacv.hotelbookingapp.service.room.RoomImagesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ public class RoomImageController {
         try {
         return ResponseEntity.ok(roomImagesService.getListRoomImage());
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -36,7 +37,7 @@ public class RoomImageController {
         try {
         return ResponseEntity.ok(roomImagesService.getRoomImageById(id));
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 }

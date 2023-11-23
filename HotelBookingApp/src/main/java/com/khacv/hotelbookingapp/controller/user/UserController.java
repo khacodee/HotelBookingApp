@@ -4,6 +4,7 @@ import com.khacv.hotelbookingapp.dto.user.UserDTO;
 import com.khacv.hotelbookingapp.entity.user.AuthRequest;
 import com.khacv.hotelbookingapp.entity.user.UserInfo;
 import com.khacv.hotelbookingapp.exception.AccessDeniedException;
+import com.khacv.hotelbookingapp.exception.IllegalArgumentException;
 import com.khacv.hotelbookingapp.exception.UnauthorizedException;
 import com.khacv.hotelbookingapp.repository.user.UserInfoRepository;
 import com.khacv.hotelbookingapp.service.user.JwtService;
@@ -53,7 +54,7 @@ public class UserController {
         try {
         return ResponseEntity.ok(service.getUserById(id));
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -64,7 +65,7 @@ public class UserController {
         // Code xử lý khi có quyền truy cập
         return ResponseEntity.ok(service.getListUser());
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
     @PostMapping("/users")
@@ -74,7 +75,7 @@ public class UserController {
         try {
         return ResponseEntity.ok(service.addUser(userInfo));
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
     @PostMapping("/signup")
@@ -82,7 +83,7 @@ public class UserController {
         try {
         return ResponseEntity.ok(service.SignUp(userDTO));
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -94,7 +95,7 @@ public class UserController {
         return ResponseEntity.ok(service.updateUser(id, userInfo));
         }
         catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -106,7 +107,7 @@ public class UserController {
         try {
         return ResponseEntity.ok(service.deleteUser(id));
         }catch (Exception e){
-            throw new IllegalArgumentException(BAD_REQUEST);
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
