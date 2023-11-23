@@ -41,6 +41,8 @@ public class HotelController {
         }
     }
 
+
+
     @PostMapping("/hotels")
     public ResponseEntity<?> createHotel(@RequestBody HotelDTO hotelDTO){
         try {
@@ -48,5 +50,15 @@ public class HotelController {
     }catch (Exception e){
         throw new IllegalArgumentException(e.getMessage());
     }
+    }
+
+    @PutMapping("/hotels/{id}")
+    public ResponseEntity<?> updateHotel( @PathVariable int id,@RequestBody HotelDTO hotelDTO){
+        try {
+            return ResponseEntity.ok(hotelService.updateHotel(id, hotelDTO));
+        }
+        catch (Exception e){
+            throw new IllegalArgumentException(e.getMessage());
+        }
     }
 }
