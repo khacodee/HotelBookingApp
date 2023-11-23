@@ -1,5 +1,6 @@
 package com.khacv.hotelbookingapp.controller.reviews;
 
+import com.khacv.hotelbookingapp.exception.IllegalArgumentException;
 import com.khacv.hotelbookingapp.service.reviews.ReviewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,7 @@ public class ReviewsController {
         try {
         return ResponseEntity.ok(reviewsService.getListReviews());
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -35,7 +36,7 @@ public class ReviewsController {
         try {
         return ResponseEntity.ok(reviewsService.getReviewsById(id));
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
         }
     }
 }

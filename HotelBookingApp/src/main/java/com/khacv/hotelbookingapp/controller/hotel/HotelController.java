@@ -26,7 +26,7 @@ public class HotelController {
         try {
         return ResponseEntity.ok(hotelService.getListHotel());
     }catch (Exception e){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ERROR + e.getMessage());
+            throw new IllegalArgumentException(e.getMessage());
     }
     }
 
