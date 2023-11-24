@@ -46,4 +46,13 @@ public class ReviewsController {
             throw new IllegalArgumentException(e.getMessage());
         }
     }
+
+    @PutMapping("/reviews/{id}")
+    public ResponseEntity<?> updateReviews(@PathVariable int id, @RequestBody ReviewDTO reviewDTO){
+        try {
+        return ResponseEntity.ok(reviewsService.updateReviews(id, reviewDTO));
+        }catch (Exception e){
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
 }
