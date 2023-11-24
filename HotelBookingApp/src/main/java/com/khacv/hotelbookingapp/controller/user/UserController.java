@@ -62,7 +62,6 @@ public class UserController {
     @PreAuthorize("hasAuthority('VIEW_LIST_USER')")
     public ResponseEntity<?> getListUser(){
         try {
-        // Code xử lý khi có quyền truy cập
         return ResponseEntity.ok(service.getListUser());
         }catch (Exception e){
             throw new IllegalArgumentException(e.getMessage());
