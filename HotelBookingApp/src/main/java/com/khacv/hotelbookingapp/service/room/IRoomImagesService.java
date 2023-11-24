@@ -13,4 +13,6 @@ public interface IRoomImagesService {
     String createRoomImage(RoomImageDTO roomImageDTO);
 
     String updateRoomImage(int id, RoomImageDTO roomImageDTO);
+
+    String deleteRoomImage(int id);
 }
