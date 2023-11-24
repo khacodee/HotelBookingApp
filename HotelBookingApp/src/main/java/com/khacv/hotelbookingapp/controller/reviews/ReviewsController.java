@@ -55,4 +55,13 @@ public class ReviewsController {
             throw new IllegalArgumentException(e.getMessage());
         }
     }
+
+    @DeleteMapping("/reviews/{id}")
+    public ResponseEntity<?> deleteReviews(@PathVariable int id){
+        try {
+        return ResponseEntity.ok(reviewsService.deleteReviews(id));
+        }catch (Exception e){
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
 }
