@@ -2,8 +2,11 @@ package com.khacv.hotelbookingapp.service.hotel;
 
 
 import com.khacv.hotelbookingapp.dto.hotel.HotelDTO;
+import com.khacv.hotelbookingapp.dto.hotel.HotelWithAmenitiesDTO;
+import com.khacv.hotelbookingapp.entity.amenities.Amenities;
 import com.khacv.hotelbookingapp.entity.hotel.Hotel;
 import com.khacv.hotelbookingapp.exception.NotFoundException;
+import com.khacv.hotelbookingapp.repository.amenities.AmenitiesRepository;
 import com.khacv.hotelbookingapp.repository.hotel.HotelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,9 @@ import static com.khacv.hotelbookingapp.util.Messages.*;
 public class HotelService implements IHotelService {
     @Autowired
     private HotelRepository hotelRepository;
+
+    @Autowired
+    private AmenitiesRepository amenitiesRepository;
 
 
 
@@ -52,6 +58,25 @@ public class HotelService implements IHotelService {
 
         hotelRepository.save(newHotel);
 
+        return ADDED_SUCCESSFULLY;
+    }
+
+    @Override
+    public String createHotelWithAmenities(HotelWithAmenitiesDTO hotelWithAmenitiesDTO) {
+        Hotel newHotel = new Hotel();
+        newHotel.setName(hotelWithAmenitiesDTO.getName());
+        newHotel.setLocation(hotelWithAmenitiesDTO.getLocation());
+        newHotel.setDescription(hotelWithAmenitiesDTO.getDescription());
+        newHotel.setImage(hotelWithAmenitiesDTO.getImage());
+        newHotel.setPrice(hotelWithAmenitiesDTO.getPrice());
+        newHotel.setActive(hotelWithAmenitiesDTO.getIsActive());
+
+        for (int i = 0; i < hotelWithAmenitiesDTO.getAmenities().size(); i++) {
+            Amenities amenities = new Amenities();
+            amenities.setId(hotelWithAmenitiesDTO.getAmenities().get(i));
+            newHotel.getAmenities().add(amenities);
+        }
+        hotelRepository.save(newHotel);
         return ADDED_SUCCESSFULLY;
     }
 

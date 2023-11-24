@@ -54,7 +54,4 @@ public class Hotel implements Serializable {
     @OneToMany(mappedBy = HOTEL,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Reviews> reviews;
-
-
-
 }
