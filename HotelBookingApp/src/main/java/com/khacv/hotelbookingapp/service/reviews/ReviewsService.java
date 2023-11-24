@@ -72,4 +72,14 @@ public class ReviewsService implements IReviewsService{
         reviewsRepository.save(reviews);
         return UPDATE_SUCCESSFUL;
     }
+
+    @Override
+    public String deleteReviews(int id) {
+        Reviews reviews = reviewsRepository.findById(id);
+        if (reviews == null){
+            throw new NotFoundException(NOT_FOUND);
+        }
+        reviewsRepository.delete(reviews);
+        return DELETE_SUCCESSFUL;
+    }
 }

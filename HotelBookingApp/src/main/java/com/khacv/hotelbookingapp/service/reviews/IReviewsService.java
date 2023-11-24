@@ -13,4 +13,6 @@ public interface IReviewsService {
     String createReviews(ReviewDTO reviewDTO);
 
     String updateReviews(int id, ReviewDTO reviewDTO);
+
+    String deleteReviews(int id);
 }
