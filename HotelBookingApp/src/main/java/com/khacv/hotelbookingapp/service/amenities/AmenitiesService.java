@@ -42,8 +42,11 @@ public class AmenitiesService implements IAmenitiesService {
     }
 
     @Override
-    public String updateAmenities(AmenitiesDTO amenities) {
-        return null;
+    public String updateAmenities(int id, AmenitiesDTO amenitiesDTO) {
+        Amenities amenities = getAmenitiesById(id);
+        amenities.setName(amenitiesDTO.getName());
+        amenitiesRepository.save(amenities);
+        return UPDATE_SUCCESSFUL;
     }
 
     @Override

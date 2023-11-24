@@ -11,6 +11,6 @@ public interface IAmenitiesService {
     Amenities getAmenitiesById(int id);
 
     String addAmenities(AmenitiesDTO amenities);
-    String updateAmenities(AmenitiesDTO amenities);
+    String updateAmenities(int id, AmenitiesDTO amenities);
     String deleteAmenities(int id);
 }

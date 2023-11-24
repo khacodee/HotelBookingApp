@@ -59,5 +59,16 @@ public class AmenitiesController {
         }
     }
 
+    @PutMapping("/amenities/{id}")
+    public ResponseEntity<?> updateAmenities(@PathVariable int id, @RequestBody AmenitiesDTO amenitiesDTO){
+        try
+        {
+        return ResponseEntity.ok(amenitiesService.updateAmenities(id, amenitiesDTO));
+        }
+        catch (Exception e)
+        {
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
 }
 
