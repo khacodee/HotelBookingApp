@@ -63,7 +63,9 @@ public class PaymentService implements IPaymentService {
 
     @Override
     public String deletePayment(int id) {
-        return null;
+        Payment payment = getPaymentById(id);
+        paymentRepository.delete(payment);
+        return DELETE_SUCCESSFUL;
     }
 
 

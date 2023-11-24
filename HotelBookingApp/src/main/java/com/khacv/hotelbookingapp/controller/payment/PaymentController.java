@@ -47,4 +47,13 @@ public class PaymentController {
             throw new IllegalArgumentException(e.getMessage());
         }
     }
+
+    @DeleteMapping("/payment/{id}")
+    public ResponseEntity<?> deletePayment(@PathVariable int id){
+        try {
+        return ResponseEntity.ok(paymentService.deletePayment(id));
+        }catch (Exception e){
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
 }
