@@ -1,5 +1,6 @@
 package com.khacv.hotelbookingapp.service.amenities;
 
+import com.khacv.hotelbookingapp.dto.amenities.AmenitiesDTO;
 import com.khacv.hotelbookingapp.entity.amenities.Amenities;
 import com.khacv.hotelbookingapp.exception.NotFoundException;
 import com.khacv.hotelbookingapp.repository.amenities.AmenitiesRepository;
@@ -28,5 +29,25 @@ public class AmenitiesService implements IAmenitiesService {
             throw new NotFoundException(NOT_FOUND);
         }
         return amenities;
+    }
+
+    @Override
+    public String addAmenities(AmenitiesDTO amenitiesDTO) {
+        Amenities amenities = new Amenities();
+
+        amenities.setName(amenitiesDTO.getName());
+
+        amenitiesRepository.save(amenities);
+        return ADDED_SUCCESSFULLY;
+    }
+
+    @Override
+    public String updateAmenities(AmenitiesDTO amenities) {
+        return null;
+    }
+
+    @Override
+    public String deleteAmenities(int id) {
+        return null;
     }
 }
