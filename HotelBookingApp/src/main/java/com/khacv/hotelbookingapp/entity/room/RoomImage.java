@@ -25,5 +25,6 @@ public class RoomImage implements Serializable {
     @JoinColumn(name = ROOM_ID)
     @JsonBackReference
     private Room room;
+    @Column(name = IMAGE_URL)
     private String imageUrl;
 }
