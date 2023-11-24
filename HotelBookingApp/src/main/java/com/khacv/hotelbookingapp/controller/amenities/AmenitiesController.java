@@ -70,5 +70,17 @@ public class AmenitiesController {
             throw new IllegalArgumentException(e.getMessage());
         }
     }
+
+    @DeleteMapping("/amenities/{id}")
+    public ResponseEntity<?> deleteAmenities(@PathVariable int id){
+        try
+        {
+        return ResponseEntity.ok(amenitiesService.deleteAmenities(id));
+        }
+        catch (Exception e)
+        {
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
 }
 

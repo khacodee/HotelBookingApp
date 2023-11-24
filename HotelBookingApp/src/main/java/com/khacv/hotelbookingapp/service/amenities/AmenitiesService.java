@@ -51,6 +51,8 @@ public class AmenitiesService implements IAmenitiesService {
 
     @Override
     public String deleteAmenities(int id) {
-        return null;
+        Amenities amenities = getAmenitiesById(id);
+        amenitiesRepository.delete(amenities);
+        return DELETE_SUCCESSFUL;
     }
 }
