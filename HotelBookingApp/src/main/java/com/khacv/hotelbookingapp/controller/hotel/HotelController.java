@@ -2,6 +2,7 @@ package com.khacv.hotelbookingapp.controller.hotel;
 
 
 import com.khacv.hotelbookingapp.dto.hotel.HotelDTO;
+import com.khacv.hotelbookingapp.dto.hotel.HotelWithAmenitiesDTO;
 import com.khacv.hotelbookingapp.exception.IllegalArgumentException;
 import com.khacv.hotelbookingapp.service.hotel.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,16 @@ public class HotelController {
     public ResponseEntity<?> ActiveHotel(@PathVariable int id){
         try {
             return ResponseEntity.ok(hotelService.ActiveHotel(id));
+        }
+        catch (Exception e){
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
+
+    @PostMapping("/hotels/with-amenities")
+    public ResponseEntity<?> createHotelWithAmenities(@RequestBody HotelWithAmenitiesDTO hotelWithAmenitiesDTO){
+        try {
+            return ResponseEntity.ok(hotelService.createHotelWithAmenities(hotelWithAmenitiesDTO));
         }
         catch (Exception e){
             throw new IllegalArgumentException(e.getMessage());
