@@ -1,14 +1,12 @@
 package com.khacv.hotelbookingapp.controller.amenities;
 
+import com.khacv.hotelbookingapp.dto.amenities.AmenitiesDTO;
 import com.khacv.hotelbookingapp.exception.IllegalArgumentException;
 import com.khacv.hotelbookingapp.service.amenities.AmenitiesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static com.khacv.hotelbookingapp.util.Messages.*;
 
@@ -49,4 +47,17 @@ public class AmenitiesController {
         }
     }
 
+    @PostMapping("/amenities")
+    public ResponseEntity<?> createAmenities(@RequestBody AmenitiesDTO amenitiesDTO){
+        try
+        {
+        return ResponseEntity.ok(amenitiesService.addAmenities(amenitiesDTO));
+        }
+        catch (Exception e)
+        {
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
+
 }
+
