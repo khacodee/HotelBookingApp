@@ -11,4 +11,7 @@ public interface IPaymentService {
     Payment getPaymentById(int id);
 
     String createPayment(PaymentDTO paymentDTO);
+
+    String updatePayment(int id, PaymentDTO paymentDTO);
+    String deletePayment(int id);
 }

@@ -50,4 +50,21 @@ public class PaymentService implements IPaymentService {
 
         return ADDED_SUCCESSFULLY;
     }
+
+    @Override
+    public String updatePayment(int id, PaymentDTO paymentDTO) {
+        Payment payment = getPaymentById(id);
+        payment.setPaymentDate(paymentDTO.getPaymentDate());
+        payment.setAmount(paymentDTO.getAmount());
+        payment.setStatus(paymentDTO.getStatus());
+        paymentRepository.save(payment);
+        return UPDATE_SUCCESSFUL;
+    }
+
+    @Override
+    public String deletePayment(int id) {
+        return null;
+    }
+
+
 }
