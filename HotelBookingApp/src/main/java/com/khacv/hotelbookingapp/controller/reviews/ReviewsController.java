@@ -1,14 +1,12 @@
 package com.khacv.hotelbookingapp.controller.reviews;
 
+import com.khacv.hotelbookingapp.dto.review.ReviewDTO;
 import com.khacv.hotelbookingapp.exception.IllegalArgumentException;
 import com.khacv.hotelbookingapp.service.reviews.ReviewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static com.khacv.hotelbookingapp.util.Messages.*;
 
@@ -35,6 +33,15 @@ public class ReviewsController {
     public ResponseEntity<?> getReviewsById(@PathVariable int id){
         try {
         return ResponseEntity.ok(reviewsService.getReviewsById(id));
+        }catch (Exception e){
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
+
+    @PostMapping("/reviews")
+    public ResponseEntity<?> createReviews(@RequestBody ReviewDTO reviewDTO){
+        try {
+        return ResponseEntity.ok(reviewsService.createReviews(reviewDTO));
         }catch (Exception e){
             throw new IllegalArgumentException(e.getMessage());
         }
