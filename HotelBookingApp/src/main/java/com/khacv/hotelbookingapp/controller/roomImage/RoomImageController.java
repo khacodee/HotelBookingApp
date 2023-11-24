@@ -56,4 +56,13 @@ public class RoomImageController {
             throw new IllegalArgumentException(e.getMessage());
         }
     }
+
+    @DeleteMapping("/images/{id}")
+    public ResponseEntity<?> deleteRoomImage(@PathVariable int id){
+        try {
+        return ResponseEntity.ok(roomImagesService.deleteRoomImage(id));
+        }catch (Exception e){
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
 }

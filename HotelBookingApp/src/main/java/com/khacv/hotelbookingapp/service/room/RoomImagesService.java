@@ -55,4 +55,14 @@ public class RoomImagesService implements IRoomImagesService {
         return UPDATE_SUCCESSFUL;
     }
 
+    @Override
+    public String deleteRoomImage(int id) {
+        RoomImage roomImage = roomImagesRepository.findById(id);
+        if (roomImage == null){
+            throw new IllegalArgumentException(NOT_FOUND);
+        }
+        roomImagesRepository.delete(roomImage);
+        return DELETE_SUCCESSFUL;
+    }
+
 }
