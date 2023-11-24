@@ -1,7 +1,10 @@
 package com.khacv.hotelbookingapp.service.email;
 
 import com.khacv.hotelbookingapp.entity.booking.Booking;
+import com.khacv.hotelbookingapp.entity.payment.Payment;
+import com.khacv.hotelbookingapp.exception.NotFoundException;
 import com.khacv.hotelbookingapp.repository.booking.BookingRepository;
+import com.khacv.hotelbookingapp.repository.payment.PaymentRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +22,28 @@ public class EmailService implements IEmailService{
 
     @Autowired
     private BookingRepository bookingRepository;
+
+    @Autowired
+    private PaymentRepository paymentRepository;
     public void sendApprovedEmail(int bookingId, String recipientEmail) {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
         try {
             Booking booking = bookingRepository.findById(bookingId);
+            if(booking == null){
+                throw new NotFoundException(NOT_FOUND);
+            }
+            Payment payment = paymentRepository.findByBookingId(bookingId);
+            if(payment == null){
+                throw new NotFoundException(NOT_FOUND);
+            }
             String emailContent = APPROVE_BOOK +
                     DATE_CHECK_IN + booking.getCheckInDate() +BR +
                     DATE_CHECK_OUT + booking.getCheckOutDate() + BR+
                     ROOM_NUMBER_BOOK + booking.getRoom().getRoomNumber() + BR +
-                    HOTEL_NAME + booking.getRoom().getHotel().getName() + BR + BR +
+                    HOTEL_NAME + booking.getRoom().getHotel().getName()+BR +
+                    "Payment Status:" + payment.getStatus() +BR + BR +
                     "Booker information:<br>" +
                     "Full Name: " + booking.getGuest().getFullName() + BR +
                     "Email: " + booking.getGuest().getEmail() + "<br>" +
