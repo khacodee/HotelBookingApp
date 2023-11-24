@@ -11,4 +11,6 @@ public interface IReviewsService {
     Reviews getReviewsById(int id);
 
     String createReviews(ReviewDTO reviewDTO);
+
+    String updateReviews(int id, ReviewDTO reviewDTO);
 }

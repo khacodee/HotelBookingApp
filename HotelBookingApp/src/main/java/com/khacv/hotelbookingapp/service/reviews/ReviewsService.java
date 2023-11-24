@@ -59,4 +59,17 @@ public class ReviewsService implements IReviewsService{
         reviewsRepository.save(newReviews);
         return ADDED_SUCCESSFULLY;
     }
+
+    @Override
+    public String updateReviews(int id, ReviewDTO reviewDTO) {
+        Reviews reviews = reviewsRepository.findById(id);
+        if (reviews == null){
+            throw new NotFoundException(NOT_FOUND);
+        }
+        reviews.setRating(reviewDTO.getRating());
+        reviews.setComment(reviewDTO.getComment());
+        reviews.setReviewDate(new Date());
+        reviewsRepository.save(reviews);
+        return UPDATE_SUCCESSFUL;
+    }
 }
