@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface PaymentRepository extends JpaRepository<Payment, Integer> {
 
     Payment findById(int id);
+
+    Payment findByBookingId(int bookingId);
 }
