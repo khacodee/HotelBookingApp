@@ -11,6 +11,7 @@ import com.khacv.hotelbookingapp.repository.reviews.ReviewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.khacv.hotelbookingapp.util.Messages.*;
@@ -51,7 +52,7 @@ public class ReviewsService implements IReviewsService{
         }
         newReviews.setRating(reviewDTO.getRating());
         newReviews.setComment(reviewDTO.getComment());
-        newReviews.setReviewDate(reviewDTO.getReviewDate());
+        newReviews.setReviewDate(new Date());
         newReviews.setHotel(hotel);
         newReviews.setGuest(guest);
 

@@ -21,7 +21,6 @@ public class ReviewDTO {
 
     private int rating;
     private String comment;
-    private Date reviewDate;
     private int hotelId;
     private int guestId;
 
