@@ -44,4 +44,15 @@ public class RoomImagesService implements IRoomImagesService {
         return ADDED_SUCCESSFULLY;
     }
 
+    @Override
+    public String updateRoomImage(int id, RoomImageDTO roomImageDTO) {
+        RoomImage roomImage = roomImagesRepository.findById(id);
+        if (roomImage == null){
+            throw new IllegalArgumentException(NOT_FOUND);
+        }
+        roomImage.setImageUrl(roomImageDTO.getImageUrl());
+        roomImagesRepository.save(roomImage);
+        return UPDATE_SUCCESSFUL;
+    }
+
 }

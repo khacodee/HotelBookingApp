@@ -47,4 +47,13 @@ public class RoomImageController {
             throw new IllegalArgumentException(e.getMessage());
         }
     }
+
+    @PutMapping("/images/{id}")
+    public ResponseEntity<?> updateRoomImage(@PathVariable int id, @RequestBody RoomImageDTO roomImageDTO){
+        try {
+        return ResponseEntity.ok(roomImagesService.updateRoomImage(id, roomImageDTO));
+        }catch (Exception e){
+            throw new IllegalArgumentException(e.getMessage());
+        }
+    }
 }
