@@ -47,7 +47,7 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public String SignUp(UserDTO userDTO) {
+    public UserInfo SignUp(UserDTO userDTO) {
         if (userRepository.existsByUsername(userDTO.getUsername())) {
             throw new UserNotFoundException(USERNAME_OR_EMAIL_EXISTS);
         }
@@ -68,11 +68,11 @@ public class UserService implements IUserService{
 
         userRepository.save(userEntity);
 
-        return ADDED_SUCCESSFULLY;
+        return userEntity;
     }
 
     @Override
-    public String updateUser(int id, UserInfo userInfo){
+    public UserInfo updateUser(int id, UserInfo userInfo){
         UserInfo userInf =userRepository.findById(id);
         if(userInf == null){
             throw new UserNotFoundException(NOT_FOUND);
@@ -105,7 +105,7 @@ public class UserService implements IUserService{
 
 
         userRepository.save(userInf);
-        return UPDATE_SUCCESSFUL;
+        return userInf;
     }
 
 
@@ -144,7 +144,7 @@ public class UserService implements IUserService{
     }
 
     @Override
-    public String deleteUser(int userId) {
+    public UserInfo deleteUser(int userId) {
         UserInfo userInf =userRepository.findById(userId);
 
         if (userInf == null) {
@@ -158,12 +158,12 @@ public class UserService implements IUserService{
         // Xóa người dùng
         userRepository.delete(userInf);
 
-        return DELETE_SUCCESSFUL;
+        return userInf;
     }
 
 
     @Override
-    public String addUser(UserInfo userInfo) {
+    public UserInfo addUser(UserInfo userInfo) {
         if (userRepository.existsByUsername(userInfo.getUsername())) {
             throw new UserNotFoundException(USERNAME_OR_EMAIL_EXISTS);
         }
@@ -184,6 +184,6 @@ public class UserService implements IUserService{
 
         userRepository.save(userInfo);
 
-        return ADDED_SUCCESSFULLY;
+        return userInfo;
     }
 }

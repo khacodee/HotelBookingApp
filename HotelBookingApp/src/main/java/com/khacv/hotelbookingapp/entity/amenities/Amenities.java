@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 import static com.khacv.hotelbookingapp.util.Constants.*;
 
 @Data
@@ -12,7 +14,7 @@ import static com.khacv.hotelbookingapp.util.Constants.*;
 @NoArgsConstructor
 @Entity
 @Table(name = AMENITIES)
-public class Amenities {
+public class Amenities implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = ID)

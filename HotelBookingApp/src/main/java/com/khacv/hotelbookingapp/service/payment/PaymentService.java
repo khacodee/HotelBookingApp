@@ -32,40 +32,45 @@ public class PaymentService implements IPaymentService {
     }
 
     @Override
-    public String createPayment(PaymentDTO paymentDTO){
+    public Payment createPayment(PaymentDTO paymentDTO){
 
         Payment payment = new Payment();
 
         Booking booking = bookingRepository.findById(paymentDTO.getBookingId());
 
-        if(booking == null){
-            throw new NotFoundException("NOT FOUND");
+        if(booking != null){
+            payment.setPaymentDate(paymentDTO.getPaymentDate());
+            payment.setAmount(paymentDTO.getAmount());
+            payment.setBooking(booking);
+            payment.setStatus(paymentDTO.getStatus());
+
+            paymentRepository.save(payment);
         }
-        payment.setPaymentDate(paymentDTO.getPaymentDate());
-        payment.setAmount(paymentDTO.getAmount());
-        payment.setBooking(booking);
-        payment.setStatus(paymentDTO.getStatus());
 
-        paymentRepository.save(payment);
 
-        return ADDED_SUCCESSFULLY;
+        return payment;
     }
 
     @Override
-    public String updatePayment(int id, PaymentDTO paymentDTO) {
+    public Payment updatePayment(int id, PaymentDTO paymentDTO) {
         Payment payment = getPaymentById(id);
-        payment.setPaymentDate(paymentDTO.getPaymentDate());
-        payment.setAmount(paymentDTO.getAmount());
-        payment.setStatus(paymentDTO.getStatus());
-        paymentRepository.save(payment);
-        return UPDATE_SUCCESSFUL;
+        if(payment != null){
+            payment.setPaymentDate(paymentDTO.getPaymentDate());
+            payment.setAmount(paymentDTO.getAmount());
+            payment.setStatus(paymentDTO.getStatus());
+            paymentRepository.save(payment);
+        }
+
+        return payment;
     }
 
     @Override
-    public String deletePayment(int id) {
+    public Payment deletePayment(int id) {
         Payment payment = getPaymentById(id);
-        paymentRepository.delete(payment);
-        return DELETE_SUCCESSFUL;
+        if(payment !=null){
+            paymentRepository.delete(payment);
+        }
+        return payment;
     }
 
 

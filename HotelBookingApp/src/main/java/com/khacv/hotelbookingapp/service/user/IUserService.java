@@ -10,15 +10,15 @@ public interface IUserService {
 
     UserInformationDTO loadInfoUserByName(String username);
 
-    String SignUp(UserDTO userDTO);
+    UserInfo SignUp(UserDTO userDTO);
 
-    String updateUser(int id, UserInfo userInfo);
+    UserInfo updateUser(int id, UserInfo userInfo);
 
     UserInfo getUserById(int id);
 
     List<UserInfo> getListUser();
 
-    String deleteUser(int userId);
+    UserInfo deleteUser(int userId);
 
-    String addUser(UserInfo userInfo);
+    UserInfo addUser(UserInfo userInfo);
 }

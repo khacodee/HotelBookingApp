@@ -10,9 +10,9 @@ public interface IReviewsService {
 
     Reviews getReviewsById(int id);
 
-    String createReviews(ReviewDTO reviewDTO);
+    Reviews createReviews(ReviewDTO reviewDTO);
 
-    String updateReviews(int id, ReviewDTO reviewDTO);
+    Reviews updateReviews(int id, ReviewDTO reviewDTO);
 
-    String deleteReviews(int id);
+    Reviews deleteReviews(int id);
 }

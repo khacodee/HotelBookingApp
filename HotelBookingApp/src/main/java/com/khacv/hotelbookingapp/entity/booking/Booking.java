@@ -36,9 +36,7 @@ public class Booking {
     @Column(name = TOTAL_PRICE)
     private BigDecimal totalPrice;
 
-
-
-
+    private String paymentMethod;
     @Column(name = "booking_status")
     private String bookingStatus;
 

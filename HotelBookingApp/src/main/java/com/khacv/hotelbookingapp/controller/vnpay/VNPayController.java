@@ -5,13 +5,11 @@ import com.khacv.hotelbookingapp.dto.payment.PaymentResDTO;
 import com.khacv.hotelbookingapp.dto.payment.TransactionDTO;
 import com.khacv.hotelbookingapp.entity.booking.Booking;
 import com.khacv.hotelbookingapp.entity.guest.Guest;
-import com.khacv.hotelbookingapp.repository.booking.BookingRepository;
-import com.khacv.hotelbookingapp.repository.guest.GuestRepository;
 import com.khacv.hotelbookingapp.service.booking.BookingService;
 import com.khacv.hotelbookingapp.service.email.EmailService;
 import com.khacv.hotelbookingapp.service.guest.GuestService;
 import com.khacv.hotelbookingapp.service.payment.PaymentService;
-import com.khacv.hotelbookingapp.vnpay.Config;
+import com.khacv.hotelbookingapp.config.VNPAYConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +23,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001"})
 @RestController
 @RequestMapping("/app")
 public class VNPayController {
@@ -51,21 +50,21 @@ public class VNPayController {
         BigDecimal amountDecimal = totalPriceDecimal.multiply(BigDecimal.valueOf(100));
 
         long amount = amountDecimal.longValue();
-        String vnp_TxnRef = Config.getRandomNumber(8);
+        String vnp_TxnRef = VNPAYConfig.getRandomNumber(8);
         String vnp_IpAdr ="127.0.0.1";
         //String bankCode = "NCB";
-        String vnp_TmnCode = Config.vnp_TmnCode;
+        String vnp_TmnCode = VNPAYConfig.vnp_TmnCode;
 
         Map<String, String> vnp_Params = new HashMap<>();
-        vnp_Params.put("vnp_Version", Config.vnp_Version);
-        vnp_Params.put("vnp_Command", Config.vnp_Command);
+        vnp_Params.put("vnp_Version", VNPAYConfig.vnp_Version);
+        vnp_Params.put("vnp_Command", VNPAYConfig.vnp_Command);
         vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
         vnp_Params.put("vnp_Amount", String.valueOf(amount));
         vnp_Params.put("vnp_CurrCode", "VND");
         vnp_Params.put("vnp_BankCode", "");
         vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
-        vnp_Params.put("vnp_ReturnUrl", Config.vnp_ReturnUrl);
-        vnp_Params.put("vnp_OrderType", Config.orderType);
+        vnp_Params.put("vnp_ReturnUrl", VNPAYConfig.vnp_ReturnUrl);
+        vnp_Params.put("vnp_OrderType", VNPAYConfig.orderType);
         vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang:" + vnp_TxnRef+ " | bookingId:" + bookingId);
         vnp_Params.put("vnp_Locale", "vn");
         vnp_Params.put("vnp_IpAddr", vnp_IpAdr);
@@ -105,9 +104,9 @@ public class VNPayController {
             }
         }
         String queryUrl = query.toString();
-        String vnp_SecureHash = Config.hmacSHA512(Config.secretKey, hashData.toString());
+        String vnp_SecureHash = VNPAYConfig.hmacSHA512(VNPAYConfig.secretKey, hashData.toString());
         queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
-        String paymentUrl = Config.vnp_PayUrl + "?" + queryUrl;
+        String paymentUrl = VNPAYConfig.vnp_PayUrl + "?" + queryUrl;
 
         PaymentResDTO paymentResDTO = new PaymentResDTO();
         paymentResDTO.setStatus("Ok");
@@ -165,7 +164,7 @@ public class VNPayController {
             bookingService.approveBookRoom(bookingId);
 
 
-            emailService.sendApprovedEmail(bookingId, guestEmail.getEmail());
+            emailService.sendApprovedEmail(bookingId);
         }else {
             transactionDTO.setStatus("No");
             transactionDTO.setMessage("Failed");
