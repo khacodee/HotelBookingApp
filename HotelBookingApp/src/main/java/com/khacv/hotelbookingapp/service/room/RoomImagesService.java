@@ -32,7 +32,7 @@ public class RoomImagesService implements IRoomImagesService {
     }
 
     @Override
-    public String createRoomImage(RoomImageDTO roomImageDTO) {
+    public RoomImage createRoomImage(RoomImageDTO roomImageDTO) {
         RoomImage newRoomImage = new RoomImage();
         newRoomImage.setImageUrl(roomImageDTO.getImageUrl());
         Room room = roomRepository.findById(roomImageDTO.getRoomId());
@@ -41,28 +41,28 @@ public class RoomImagesService implements IRoomImagesService {
         }
         newRoomImage.setRoom(room);
         roomImagesRepository.save(newRoomImage);
-        return ADDED_SUCCESSFULLY;
+        return newRoomImage;
     }
 
     @Override
-    public String updateRoomImage(int id, RoomImageDTO roomImageDTO) {
+    public RoomImage updateRoomImage(int id, RoomImageDTO roomImageDTO) {
         RoomImage roomImage = roomImagesRepository.findById(id);
         if (roomImage == null){
             throw new IllegalArgumentException(NOT_FOUND);
         }
         roomImage.setImageUrl(roomImageDTO.getImageUrl());
         roomImagesRepository.save(roomImage);
-        return UPDATE_SUCCESSFUL;
+        return roomImage;
     }
 
     @Override
-    public String deleteRoomImage(int id) {
+    public RoomImage deleteRoomImage(int id) {
         RoomImage roomImage = roomImagesRepository.findById(id);
         if (roomImage == null){
             throw new IllegalArgumentException(NOT_FOUND);
         }
         roomImagesRepository.delete(roomImage);
-        return DELETE_SUCCESSFUL;
+        return roomImage;
     }
 
 }

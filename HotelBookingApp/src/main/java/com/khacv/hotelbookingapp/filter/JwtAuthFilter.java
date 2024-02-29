@@ -54,7 +54,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 response.getWriter().write(TOKEN_INVALID);
                 return;
             }
-
         }
 
 

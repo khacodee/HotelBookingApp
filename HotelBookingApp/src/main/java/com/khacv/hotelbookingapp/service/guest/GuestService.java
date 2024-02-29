@@ -36,47 +36,50 @@ public class GuestService implements IGuestService {
     }
 
     @Override
-    public String createGuest(GuestDTO guestDTO){
+    public Guest createGuest(GuestDTO guestDTO){
         Guest newGuest = new Guest();
         newGuest.setFullName(guestDTO.getFullName());
         newGuest.setAddress(guestDTO.getAddress());
+        newGuest.setEmail(guestDTO.getEmail());
         newGuest.setPhoneNumber(guestDTO.getPhoneNumber());
         guestRepository.save(newGuest);
-        return ADDED_SUCCESSFULLY;
+        return newGuest;
     }
 
     @Override
-    public String deleteGuest(int id) {
+    public Guest deleteGuest(int id) {
         Guest guest = guestRepository.findById(id);
-        if(guest == null){
-            throw new NotFoundException("Not Found");
+        if(guest != null){
+            guestRepository.delete(guest);
         }
-        guestRepository.delete(guest);
-        return DELETE_SUCCESSFUL;
+        return guest;
     }
 
     @Override
     public Guest getGuestById(int id){
         Guest guest = guestRepository.findById(id);
         if(guest == null){
-            throw new NotFoundException("Not Found");
+            throw new NotFoundException(NOT_FOUND);
         }
+
         return guest;
     }
 
     @Override
-    public String updateGuestProfile(int guestId, GuestDTO guestDTO){
+    public Guest updateGuestProfile(int guestId, GuestDTO guestDTO){
         Guest existingGuest = guestRepository.findById(guestId);
         if(existingGuest == null){
-            throw new NotFoundException("Not Found");
+           throw new NotFoundException(NOT_FOUND);
         }
-            existingGuest.setFullName(guestDTO.getFullName());
-            existingGuest.setAddress(guestDTO.getAddress());
-            existingGuest.setPhoneNumber(guestDTO.getPhoneNumber());
+        existingGuest.setFullName(guestDTO.getFullName());
+        existingGuest.setAddress(guestDTO.getAddress());
+        existingGuest.setEmail(guestDTO.getEmail());
+        existingGuest.setPhoneNumber(guestDTO.getPhoneNumber());
 
-             guestRepository.save(existingGuest);
+        guestRepository.save(existingGuest);
 
-             return UPDATE_SUCCESSFUL;
+
+             return existingGuest;
 
 
     }

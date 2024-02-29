@@ -6,7 +6,7 @@ import com.khacv.hotelbookingapp.entity.guest.Guest;
 import java.util.List;
 
 public interface IGuestService {
-    String updateGuestProfile(int guestId, GuestDTO guestDTO);
+   Guest updateGuestProfile(int guestId, GuestDTO guestDTO);
 
     Guest getGuestById(int id);
 
@@ -14,7 +14,7 @@ public interface IGuestService {
 
     Guest findGuestByBookingId(int id);
 
-    String createGuest(GuestDTO guestDTO);
+   Guest createGuest(GuestDTO guestDTO);
 
-    String deleteGuest(int id);
+    Guest deleteGuest(int id);
 }

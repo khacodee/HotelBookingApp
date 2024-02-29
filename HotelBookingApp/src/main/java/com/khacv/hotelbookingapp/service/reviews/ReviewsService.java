@@ -34,52 +34,50 @@ public class ReviewsService implements IReviewsService{
 
     @Override
     public Reviews getReviewsById(int id){
+
         return reviewsRepository.findById(id);
     }
 
     @Override
-    public String createReviews(ReviewDTO reviewDTO) {
+    public Reviews createReviews(ReviewDTO reviewDTO) {
 
         Reviews newReviews = new Reviews();
         Hotel hotel = hotelRepository.findById(reviewDTO.getHotelId());
 
-        if(hotel == null){
-            throw new NotFoundException(NOT_FOUND);
+        if(hotel != null){
+            newReviews.setHotel(hotel);
         }
         Guest guest = guestRepository.findById(reviewDTO.getGuestId());
-        if (guest == null){
-            throw new NotFoundException(NOT_FOUND);
+        if (guest != null){
+            newReviews.setGuest(guest);
         }
         newReviews.setRating(reviewDTO.getRating());
         newReviews.setComment(reviewDTO.getComment());
         newReviews.setReviewDate(new Date());
-        newReviews.setHotel(hotel);
-        newReviews.setGuest(guest);
 
         reviewsRepository.save(newReviews);
-        return ADDED_SUCCESSFULLY;
+        return newReviews;
     }
 
     @Override
-    public String updateReviews(int id, ReviewDTO reviewDTO) {
+    public Reviews updateReviews(int id, ReviewDTO reviewDTO) {
         Reviews reviews = reviewsRepository.findById(id);
-        if (reviews == null){
-            throw new NotFoundException(NOT_FOUND);
+        if (reviews != null){
+            reviews.setRating(reviewDTO.getRating());
+            reviews.setComment(reviewDTO.getComment());
+            reviews.setReviewDate(new Date());
+            reviewsRepository.save(reviews);
         }
-        reviews.setRating(reviewDTO.getRating());
-        reviews.setComment(reviewDTO.getComment());
-        reviews.setReviewDate(new Date());
-        reviewsRepository.save(reviews);
-        return UPDATE_SUCCESSFUL;
+        return reviews;
     }
 
     @Override
-    public String deleteReviews(int id) {
+    public Reviews deleteReviews(int id) {
         Reviews reviews = reviewsRepository.findById(id);
-        if (reviews == null){
-            throw new NotFoundException(NOT_FOUND);
+        if (reviews != null){
+            reviewsRepository.delete(reviews);
         }
-        reviewsRepository.delete(reviews);
-        return DELETE_SUCCESSFUL;
+
+        return reviews;
     }
 }

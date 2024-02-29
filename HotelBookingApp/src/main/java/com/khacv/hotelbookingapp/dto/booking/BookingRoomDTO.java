@@ -1,5 +1,6 @@
 package com.khacv.hotelbookingapp.dto.booking;
 
+import com.khacv.hotelbookingapp.entity.guest.Guest;
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,8 @@ public class BookingRoomDTO {
     private Date checkOutDate;
 
     private BigDecimal totalPrice;
+
+    private String paymentMethod;
 
     private String bookingStatus;
 

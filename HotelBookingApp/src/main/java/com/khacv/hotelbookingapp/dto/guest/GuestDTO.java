@@ -11,5 +11,6 @@ import lombok.NoArgsConstructor;
 public class GuestDTO {
     private String fullName;
     private String address;
+    private String email;
     private String phoneNumber;
 }

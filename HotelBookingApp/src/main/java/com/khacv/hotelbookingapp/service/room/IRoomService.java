@@ -3,6 +3,7 @@ package com.khacv.hotelbookingapp.service.room;
 import com.khacv.hotelbookingapp.dto.room.RoomDTO;
 import com.khacv.hotelbookingapp.entity.room.Room;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface IRoomService {
@@ -11,11 +12,13 @@ public interface IRoomService {
 
     Room getRoomById(int id);
 
-    String createRoom(RoomDTO roomDTO);
+    Room createRoom(RoomDTO roomDTO);
 
-    String updateRoom(int id, RoomDTO updateRoom);
+    Room updateRoom(int id, RoomDTO updateRoom);
 
-    String deleteRoom(int id);
+    Room deleteRoom(int id);
 
     List<Room> getAvailableRooms();
+
+    List<Room> searchRoomsByTypeAndPriceAndIsBooked(String roomType, BigDecimal priceMin, BigDecimal priceMax);
 }

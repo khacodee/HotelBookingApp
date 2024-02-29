@@ -10,9 +10,9 @@ public interface IRoomImagesService {
 
     RoomImage getRoomImageById(int id);
 
-    String createRoomImage(RoomImageDTO roomImageDTO);
+    RoomImage createRoomImage(RoomImageDTO roomImageDTO);
 
-    String updateRoomImage(int id, RoomImageDTO roomImageDTO);
+    RoomImage updateRoomImage(int id, RoomImageDTO roomImageDTO);
 
-    String deleteRoomImage(int id);
+    RoomImage deleteRoomImage(int id);
 }

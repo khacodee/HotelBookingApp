@@ -3,20 +3,28 @@ package com.khacv.hotelbookingapp.service.hotel;
 import com.khacv.hotelbookingapp.dto.hotel.HotelDTO;
 import com.khacv.hotelbookingapp.dto.hotel.HotelWithAmenitiesDTO;
 import com.khacv.hotelbookingapp.entity.hotel.Hotel;
+import com.khacv.hotelbookingapp.entity.room.Room;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface IHotelService {
 
+    List<Hotel> getListHotelIsActive();
+
+    Hotel getHotelByIdWithRoom(int id);
+
     List<Hotel> getListHotel();
     Hotel getHotelById(int id);
 
-    String createHotel(HotelDTO hotelDTO);
+    Hotel createHotel(HotelDTO hotelDTO);
 
-    String createHotelWithAmenities(HotelWithAmenitiesDTO hotelWithAmenitiesDTO);
-    String updateHotel(int id, HotelDTO updateHotel);
+    Hotel createHotelWithAmenities(HotelWithAmenitiesDTO hotelWithAmenitiesDTO);
+    Hotel updateHotel(int id, HotelDTO updateHotel);
 
-    String deleteHotel(int id);
+    Hotel deleteHotel(int id);
 
-    String ActiveHotel(int id);
+    Hotel ActiveHotel(int id);
+
+    List<Hotel> searchRoomsByTypeAndPriceAndIsBooked(String roomType, BigDecimal priceMin, BigDecimal priceMax);
 }
